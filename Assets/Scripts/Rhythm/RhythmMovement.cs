@@ -16,8 +16,8 @@ public class RhythmMovement : Photon.MonoBehaviour
 	private float previousEventTime;
 	private float nextEventTime;
 
-	private Vector3 correctPlayerPos;
-	private Quaternion correctPlayerRot;
+	private Vector3 correctPlayerPos = Vector3.zero;
+	private Quaternion correctPlayerRot = Quaternion.identity;
 
 	static private Color[] playerColors = { Color.red, Color.green, Color.yellow, Color.blue };
 
