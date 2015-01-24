@@ -46,6 +46,15 @@ public class RhythmMovement : MonoBehaviour {
 
 	}
 
+	void OnControllerColliderHit(ControllerColliderHit hit) {
+		if(hit.gameObject.tag != "Wall") return;
+		CharacterController controller = GetComponent<CharacterController>();
+		controller.Move(Vector3.zero);
+			
+		startPosition = transform.position;
+		endPosition = transform.position;
+	}
+
 	public void Beat(Vector2 data) {
 		//Debug.Log (data.x + " " + beatTime);
 		if(data.x == beatTime) {
