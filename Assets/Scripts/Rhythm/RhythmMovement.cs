@@ -13,17 +13,26 @@ public class RhythmMovement : Photon.MonoBehaviour
 	private double lastBeat;
 	private Vector3 correctPlayerPos = Vector3.zero;
 	private Quaternion correctPlayerRot = Quaternion.identity;
-
+	private Vector3 movementDirection = new Vector3();
+	
+	private ModelController model;
+	
 	static private Color[] playerColors = { Color.red, Color.green, Color.yellow, Color.blue };
 
 	void Start ()
 	{
 		startPosition = transform.position;
 		endPosition = transform.position;
+		movementDirection = Vector3.zero;
 
+		// Set Colors
 		int color = photonView.owner.ID % playerColors.Length;
-		ModelController model = GetComponentInChildren<ModelController>();
+		model = GetComponentInChildren<ModelController>();
 		model.SetColor(playerColors[color]);
+		
+		foreach (Light l in GetComponentsInChildren<Light>()) {
+			l.color = playerColors[color];
+		}
 
 		if (!photonView.isMine)
 			GetComponent<CharacterController>().enabled = false;
@@ -31,6 +40,9 @@ public class RhythmMovement : Photon.MonoBehaviour
 	
 	void Update ()
 	{
+		double beatTime = MusicBeat.BeatTime;
+		float currentBeatFloor = Mathf.Floor((float) beatTime);
+		
 		if (!photonView.isMine)
 		{
 			transform.position = Vector3.Lerp(transform.position, this.correctPlayerPos, Time.deltaTime * 5);
@@ -38,8 +50,6 @@ public class RhythmMovement : Photon.MonoBehaviour
 		}
 		else
 		{
-			double beatTime = MusicBeat.BeatTime;
-			float currentBeatFloor = Mathf.Floor((float) beatTime);
 			if (Mathf.Floor((float)lastBeat) != currentBeatFloor)
 			{
 				Vector3 position = -Vector3.up;
@@ -55,6 +65,7 @@ public class RhythmMovement : Photon.MonoBehaviour
 
 				startPosition = transform.position;
 				endPosition = startPosition + position.normalized * cubesPerBeat;
+				movementDirection = endPosition - startPosition;
 			}
 
 			lastBeat = beatTime;
@@ -65,6 +76,10 @@ public class RhythmMovement : Photon.MonoBehaviour
 			if (startPosition != endPosition)
 				controller.Move(Vector3.Lerp(startPosition, endPosition, time) - transform.position);
 		}
+		
+		float speedFactor = (float) beatTime - Mathf.Floor ((float)beatTime);
+		speedFactor = 1.0f - Easing.Circular.Out(speedFactor);
+		model.SetAnimationState(speedFactor, movementDirection);
 	}
 
 	void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -73,11 +88,13 @@ public class RhythmMovement : Photon.MonoBehaviour
 		{
 			stream.SendNext(transform.position);
 			stream.SendNext(transform.rotation);
+			stream.SendNext(endPosition - startPosition);
 		}
 		else
 		{
-			this.correctPlayerPos = (Vector3)stream.ReceiveNext();
-			this.correctPlayerRot = (Quaternion)stream.ReceiveNext();
+			correctPlayerPos = (Vector3)stream.ReceiveNext();
+			correctPlayerRot = (Quaternion)stream.ReceiveNext();
+			movementDirection = (Vector3)stream.ReceiveNext();
 		}
 	}
 }
