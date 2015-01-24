@@ -28,7 +28,7 @@ Material:
       data:
         first:
           name: _FogStart
-        second: 0
+        second: 100
       data:
         first:
           name: _FogWidth
@@ -40,9 +40,9 @@ Material:
         second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
-          name: _OutlineColor
-        second: {r: .603921592, g: 1, b: .949019611, a: 1}
-      data:
-        first:
           name: _BaseColor
         second: {r: .0196078438, g: .0196078438, b: .0588235296, a: 1}
+      data:
+        first:
+          name: _OutlineColor
+        second: {r: .603921592, g: 1, b: .949019611, a: 1}
