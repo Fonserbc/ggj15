@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Walls
-  m_Shader: {fileID: 4800000, guid: 0b82299f680684741bf3e444dd90658b, type: 3}
+  m_Name: WallsBeat
+  m_Shader: {fileID: 4800000, guid: 6b137a80d3aa5ea44af9157cb0d17cdd, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -24,7 +24,11 @@ Material:
       data:
         first:
           name: _OutlineWidth
-        second: .0374999903
+        second: .0892857239
+      data:
+        first:
+          name: _BeatTime
+        second: .99000001
     m_Colors:
       data:
         first:
