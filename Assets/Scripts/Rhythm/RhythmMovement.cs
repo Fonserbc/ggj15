@@ -36,24 +36,15 @@ public class RhythmMovement : MonoBehaviour {
 			if(Input.GetKey(KeyCode.W)) position += transform.forward;
 
 
-			startPosition = endPosition;
-			endPosition += position.normalized*cubesPerBeat;
+			startPosition = transform.position;
+			endPosition = startPosition + position.normalized*cubesPerBeat;
 		}
 		float time = Mathf.Min (1.0f,((float) AudioSettings.dspTime - previousEventTime) / (nextEventTime - previousEventTime));
 		time = Easing.Circular.Out (time);
 		CharacterController controller = GetComponent<CharacterController>();
 		if(startPosition != endPosition) controller.Move(Vector3.Lerp(startPosition, endPosition,time)-transform.position);
-
 	}
 
-	void OnControllerColliderHit(ControllerColliderHit hit) {
-		if(hit.gameObject.tag != "Wall") return;
-		CharacterController controller = GetComponent<CharacterController>();
-		controller.Move(Vector3.zero);
-			
-		startPosition = transform.position;
-		endPosition = transform.position;
-	}
 
 	public void Beat(Vector2 data) {
 		//Debug.Log (data.x + " " + beatTime);
