@@ -23,8 +23,8 @@ public class ModelController : MonoBehaviour {
 		float axisRelation = Mathf.Abs(localDir.z) - Mathf.Abs(localDir.x);
 		
 		anim.SetFloat("speedFactor", axisRelation != 0.0f? (speedFactor > 0.5f? 1.0f : 0.0f) : 0.0f);
-		anim.SetFloat("vAxis", localDir.x);
-		anim.SetFloat("hAxis", localDir.z);
+		anim.SetFloat("vAxis", localDir.z);
+		anim.SetFloat("hAxis", localDir.x);
 		anim.SetFloat("axisRelation", axisRelation);
 	}
 	
