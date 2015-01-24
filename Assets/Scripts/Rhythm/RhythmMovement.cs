@@ -27,14 +27,14 @@ public class RhythmMovement : MonoBehaviour {
 		if(move) {
 			move = false;
 			Vector3 position = Vector3.zero;
-			if(Input.GetKey(KeyCode.LeftArrow)) position -= transform.right;
-			if(Input.GetKey(KeyCode.RightArrow)) position += transform.right;
-			if(Input.GetKey(KeyCode.DownArrow)) position -= transform.forward;
-			if(Input.GetKey(KeyCode.UpArrow)) position += transform.forward;
+			if(Input.GetKey(KeyCode.A)) position -= transform.right;
+			if(Input.GetKey(KeyCode.D)) position += transform.right;
+			if(Input.GetKey(KeyCode.S)) position -= transform.forward;
+			if(Input.GetKey(KeyCode.W)) position += transform.forward;
 
 
 			startPosition = endPosition;
-			endPosition += position*cubesPerBeat;
+			endPosition += position.normalized*cubesPerBeat;
 		}
 		float time = Mathf.Min (1.0f,((float) AudioSettings.dspTime - previousEventTime) / (nextEventTime - previousEventTime));
 		time = Easing.Circular.Out (time);
