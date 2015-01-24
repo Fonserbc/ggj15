@@ -30,7 +30,7 @@ public class MusicBeat : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
 		if(Input.GetKeyDown(KeyCode.Space) && !running) {
 			music.PlayScheduled(AudioSettings.dspTime + 1.0);
 			currentBeat = -1f/compassBeatDivision;

@@ -20,10 +20,13 @@ public class RhythmMovement : MonoBehaviour {
 	void Start () {
 		startPosition = transform.position;
 		endPosition = transform.position;
+		previousEventTime = (float)AudioSettings.dspTime;
+		nextEventTime = (float)AudioSettings.dspTime;
+
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
 		if(move) {
 			move = false;
 			Vector3 position = Vector3.zero;
@@ -38,7 +41,7 @@ public class RhythmMovement : MonoBehaviour {
 		}
 		float time = Mathf.Min (1.0f,((float) AudioSettings.dspTime - previousEventTime) / (nextEventTime - previousEventTime));
 		time = Easing.Circular.Out (time);
-		rigidbody.MovePosition(Vector3.Lerp(startPosition, endPosition,time));
+		if((float) AudioSettings.dspTime <= nextEventTime) rigidbody.MovePosition(Vector3.Lerp(startPosition, endPosition,time));
 
 	}
 
