@@ -30,6 +30,7 @@ public class ModelController : MonoBehaviour {
 	}
 	
 	public void SetColor (Color c) {
+		playerColor = c;
 		Color baseColor = c;
 		float maxColor = Mathf.Max(baseColor.r, Mathf.Max(baseColor.g, baseColor.b));
 		float minFactor = 15.0f/255f;

@@ -22,7 +22,6 @@ public class PlayerNerworkInstance : MonoBehaviour
 			int spawnPoint = Random.Range(0, SpawnPoints.Length - 1);
 			position = SpawnPoints[spawnPoint].transform.position;
 			rotation = SpawnPoints[spawnPoint].transform.rotation;
-
 		}
 
 		GameObject newPlayerObject = PhotonNetwork.Instantiate("Cube", position, rotation, 0);
