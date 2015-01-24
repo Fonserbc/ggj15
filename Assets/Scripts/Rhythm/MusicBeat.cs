@@ -101,6 +101,7 @@ public class MusicBeat : Photon.MonoBehaviour
 				else
 				{
 					double delta = netTime - remoteScheduledStartTime;
+					dspStartTime = dspTime + delta;
 					music.time = (float) (delta + 1.0);
 					music.PlayScheduled(dspTime + 1.0);
 				}
