@@ -12,9 +12,14 @@ public class Shoot : MonoBehaviour {
 	
 	public GameObject bullet;
 	float lastShoot = 0.0f;
+	private double lastBeat;
+
 	
 	// Update is called once per frame
 	void Update () {
+		double beatTime = MusicBeat.BeatTime;
+		float currentBeatFloor = Mathf.Floor((float) beatTime);
+
 		if (lastShoot > 0.0f) {
 			lastShoot -= Time.deltaTime;
 			
@@ -23,15 +28,22 @@ public class Shoot : MonoBehaviour {
 				light.enabled = false;
 			}
 		}
-		switch (gun) {
-		case Gun.Pistol:
-			if (Input.GetButtonDown("Fire1")) {
-				ShootBullet();
+
+		if (Mathf.Floor((float)lastBeat) != currentBeatFloor)
+		{
+			switch (gun) {
+			case Gun.Pistol:
+				if (Input.GetButton("Fire1")) {
+					ShootBullet();
+				}
+				break;
+			default:
+				break;
 			}
-			break;
-		default:
-			break;
 		}
+
+		lastBeat = beatTime;
+
 	}
 	
 	public void ShootBullet()
