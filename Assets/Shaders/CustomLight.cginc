@@ -36,34 +36,38 @@ float torramod(float x, float y) {
 	return x - y * floor(x/y);
 }
 
-float4 LightingCustomLight_PrePass (SurfaceOutput s, float4 light) {
-	float4 col;
-	if(s.Gloss > .5f) { //borders
-		float3 surfHSL = RGBtoHSL(s.Albedo);
-		float3 lightHSL = RGBtoHSL(light.rgb);
-		surfHSL.x = torramod(surfHSL.x, 1.0f);
-		lightHSL.x = torramod(lightHSL.x, 1.0f);
-		float3 result = surfHSL;
-		result.z = 0.6; //because yes, because we like gay pastel lights
-		result.y = 1; //in soviet game jams, colors saturate you
-		if(lightHSL.z > 0.5f && lightHSL.y != 0.0f) { //general light case
-			float weight = min(1,(lightHSL.z-0.5f)/0.5f);
-			float dist = (lightHSL.x >= surfHSL.x ? lightHSL.x - surfHSL.x : surfHSL.x - lightHSL.x); //hue distance
-			if (dist > 0.5) { //the other way around the HSL ring must be taken
-				if(lightHSL.x < surfHSL.x) lightHSL.x += 1.0f;
-				else surfHSL.x += 1.0f;
-			}
-			result.x = (surfHSL.x)*(1-weight)+lightHSL.x*weight; //average hue
-			result.x = torramod(result.x, 1.0f); //renormalize
+float3 computeBorder(float3 albedo, float3 light) {
+	float3 surfHSL = RGBtoHSL(albedo);
+	float3 lightHSL = RGBtoHSL(light);
+	surfHSL.x = torramod(surfHSL.x, 1.0f);
+	lightHSL.x = torramod(lightHSL.x, 1.0f);
+	float3 result = surfHSL;
+	result.z = 0.6; //because yes, because we like gay pastel lights
+	result.y = 1; //in soviet game jams, colors saturate you
+	if(lightHSL.z > 0.5f && lightHSL.y != 0.0f) { //general light case
+		float weight = min(1,(lightHSL.z-0.5f)/0.5f);
+		float dist = (lightHSL.x >= surfHSL.x ? lightHSL.x - surfHSL.x : surfHSL.x - lightHSL.x); //hue distance
+		if (dist > 0.5) { //the other way around the HSL ring must be taken
+			if(lightHSL.x < surfHSL.x) lightHSL.x += 1.0f;
+			else surfHSL.x += 1.0f;
 		}
-		else if(lightHSL.y == 0.0f) { //white fucking light I hate you so much please die in a fucking fire somewhere far away
-			result.z = max(0.6, lightHSL.z); //light up dat pastel
-		}
-		col = float4(HSLtoRGB(result),1);
-	} else {
-		col = float4(s.Albedo,1)*light;
+		result.x = (surfHSL.x)*(1-weight)+lightHSL.x*weight; //average hue
+		result.x = torramod(result.x, 1.0f); //renormalize
 	}
-	return col;
+	else if(lightHSL.y == 0.0f) { //white fucking light I hate you so much please die in a fucking fire somewhere far away
+		result.z = max(0.6, lightHSL.z); //light up dat pastel
+	}
+	return HSLtoRGB(result);
+}
+
+float3 computeCenter(float3 albedo, float3 light) {
+	return albedo*light;
+}
+
+float4 LightingCustomLight_PrePass (SurfaceOutput s, float4 light) {
+	float3 border = computeBorder(s.Albedo, light.rgb);
+	float3 center = computeCenter(s.Albedo, light.rgb);
+	return float4(border*s.Gloss + center*(1-s.Gloss),1);
 }
 
 #endif
