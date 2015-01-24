@@ -32,6 +32,7 @@ public class RhythmMovement : MonoBehaviour {
 			Vector3 position = -Vector3.up;
 
 			position += transform.forward*Input.GetAxis("Vertical") + transform.right*Input.GetAxis("Horizontal");
+
 			/*
 			if(Input.GetKey(KeyCode.A)) position -= transform.right;
 			if(Input.GetKey(KeyCode.D)) position += transform.right;

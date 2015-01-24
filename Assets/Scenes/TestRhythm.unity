@@ -1673,6 +1673,8 @@ GameObject:
   - 114: {fileID: 1941986263}
   - 114: {fileID: 1941986265}
   - 114: {fileID: 1941986266}
+  - 114: {fileID: 1941986264}
+  - 108: {fileID: 1941986267}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1784,6 +1786,20 @@ MonoBehaviour:
   SpriteCheckmark: {fileID: 0}
   SpriteField: {fileID: 0}
   show: 0
+--- !u!114 &1941986264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1941986256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 540278c087756074c9da55ee43728a22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gun: 0
+  bullet: {fileID: 116486, guid: 142987c46a233e943866a65526acd9c7, type: 2}
+  myCompassBeat: 1
 --- !u!114 &1941986265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1838,6 +1854,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCompassBeat: 1
+--- !u!108 &1941986267
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1941986256}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Type: 2
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_Strength: 1
+    m_Bias: .0500000007
+    m_Softness: 4
+    m_SoftnessFade: 1
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_ActuallyLightmapped: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 1
+  m_ShadowSamples: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_IndirectIntensity: 1
+  m_AreaSize: {x: 1, y: 1}
 --- !u!1 &1958108344
 GameObject:
   m_ObjectHideFlags: 0
