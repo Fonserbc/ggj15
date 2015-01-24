@@ -13,7 +13,7 @@ public class PlayerNerworkInstance : MonoBehaviour
 
 	void CreatePlayerObject()
 	{
-		Vector3 position = new Vector3(0.0f, 0.5f, 0.0f);
+		Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);
 		GameObject newPlayerObject = PhotonNetwork.Instantiate("Cube", position, Quaternion.identity, 0);
 
 		if (beatObjects != null)
