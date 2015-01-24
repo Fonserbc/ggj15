@@ -16,7 +16,7 @@ MonoBehaviour:
   ServerAddress: 
   ServerPort: 5055
   PreferredRegion: 0
-  AppID: 31323031363961322d613736662d343135642d623261382d316164663663346232323634
+  AppID: 120169a2-a76f-415d-b2a8-1adf6c4b2264
   PingCloudServersOnAwake: 0
   RpcList:
   - 43686174
@@ -28,4 +28,13 @@ MonoBehaviour:
   - 50756e5069636b757053696d706c65
   - 50756e5265737061776e
   - 52657175657374466f725069636b757054696d6573
+  - Chat
+  - DestroyRpc
+  - InstantiateRpc
+  - OnAwakeRPC
+  - PickupItemInit
+  - PunPickup
+  - PunPickupSimple
+  - PunRespawn
+  - RequestForPickupTimes
   DisableAutoOpenWizard: 0
