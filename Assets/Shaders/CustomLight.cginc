@@ -39,7 +39,8 @@ float4 LightingCustomLight_PrePass (SurfaceOutput s, float4 light) {
 		float3 lightHSL = RGBtoHSL(light.rgb);
 		float3 result = surfHSL;
 		if(lightHSL.z > 0.5f) {
-			result.x = (surfHSL.x+lightHSL.x)/2.0f;
+			float weight = (lightHSL.z-0.5f)/0.5f;
+			result.x = (result.x)*(1-weight)+((surfHSL.x+lightHSL.x)/2.0f)*weight;
 		}
 		result.y = 1;
 		col = float4(HSLtoRGB(result),1);
