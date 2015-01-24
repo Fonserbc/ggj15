@@ -25,6 +25,14 @@ Material:
         first:
           name: _OutlineWidth
         second: .010714286
+      data:
+        first:
+          name: _FogStart
+        second: 0
+      data:
+        first:
+          name: _FogWidth
+        second: 20
     m_Colors:
       data:
         first:

@@ -29,22 +29,26 @@ public class RhythmMovement : MonoBehaviour {
 	void Update () {
 		if(move) {
 			move = false;
-			Vector3 position = Vector3.zero;
+			Vector3 position = -Vector3.up;
+
+			position += transform.forward*Input.GetAxis("Vertical") + transform.right*Input.GetAxis("Horizontal");
+			/*
 			if(Input.GetKey(KeyCode.A)) position -= transform.right;
 			if(Input.GetKey(KeyCode.D)) position += transform.right;
 			if(Input.GetKey(KeyCode.S)) position -= transform.forward;
 			if(Input.GetKey(KeyCode.W)) position += transform.forward;
+			*/
 
 
-			startPosition = endPosition;
-			endPosition += position.normalized*cubesPerBeat;
+			startPosition = transform.position;
+			endPosition = startPosition + position.normalized*cubesPerBeat;
 		}
 		float time = Mathf.Min (1.0f,((float) AudioSettings.dspTime - previousEventTime) / (nextEventTime - previousEventTime));
 		time = Easing.Circular.Out (time);
 		CharacterController controller = GetComponent<CharacterController>();
 		if(startPosition != endPosition) controller.Move(Vector3.Lerp(startPosition, endPosition,time)-transform.position);
-
 	}
+
 
 	public void Beat(Vector2 data) {
 		//Debug.Log (data.x + " " + beatTime);

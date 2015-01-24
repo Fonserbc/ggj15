@@ -1,14 +1,14 @@
 ﻿#pragma strict
 
-	var move : boolean = false;
-	var beatTime : float = 0.0;
+	private var move : boolean = false;
+	private var beatTime : float = 0.0;
 	public var myCompassBeat : float = 1f;
 	
-	var previousEventTime : float;
-	var nextEventTime : float;
+	private var previousEventTime : float;
+	private var nextEventTime : float;
 	
-	var flares : BloomAndLensFlares; 
-	var blurSpread : float;
+	private var flares : BloomAndLensFlares; 
+	private var blurSpread : float;
 
 
 function Start () {
@@ -27,8 +27,9 @@ function Update () {
 
 function Beat(data : Vector2) {
 	if(data.x == beatTime) {
-		move = true;
+		move = !move;
 		beatTime += 1.0/myCompassBeat;
+		if(!move) return;
 		if (flares != null) flares.sepBlurSpread = 0.1;
 		
 		previousEventTime = data.y;

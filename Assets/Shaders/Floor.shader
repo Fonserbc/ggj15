@@ -3,7 +3,9 @@
 		_MainTex ("Base (RGB)", 2D) = "white" {}
 		_BaseColor ("Base Color", Color) = (1, 1, 1, 1)
 		_OutlineColor ("Outline Color", Color) = (1, 1, 1, 1)
-		_OutlineWidth ("Outline width", Range(0, 0.5)) = 0.1
+		_OutlineWidth ("Outline Width", Range(0, 0.5)) = 0.1
+		_FogStart ("Fog Start", Range(0, 100.0)) = 10.0
+		_FogWidth ("Fog Width", Range(0, 20.0)) = 5.0
 	}
 	
 	SubShader {
@@ -21,6 +23,8 @@
 		uniform float4 _BaseColor;
 		uniform float _OutlineWidth;
 		uniform float4 _OutlineColor;
+		uniform float _FogStart;
+		uniform float _FogWidth;
 		
 		float mod(float x, float y) {
 		  return x - y * floor(x/y);
@@ -41,8 +45,8 @@
 		};
 		
 		void surf (Input IN, inout SurfaceOutput o) {
-			float startFog = 10.0;
-			float fogWidth = 5.0;
+			float startFog = _FogStart;
+			float fogWidth = _FogWidth;
 			float fogFactor = min(1.0, max(0.0, IN.screenPos.z - startFog)/fogWidth);
 			float4 tex = tex2D (_MainTex, IN.uv_MainTex);
 			float3 baseColor = tex.rgb * _BaseColor.rgb;
