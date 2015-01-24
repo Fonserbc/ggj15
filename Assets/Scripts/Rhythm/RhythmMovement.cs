@@ -7,32 +7,21 @@ public class RhythmMovement : Photon.MonoBehaviour
 	public float cubesPerBeat = 2f;
 	public float velocity = 2f;
 
-	private bool move = false;
-	private float beatTime = 0f;
+	private Vector3 startPosition = Vector2.zero;
+	private Vector3 endPosition = Vector2.zero;
 
-	private Vector3 startPosition;
-	private Vector3 endPosition;
-
-	private float previousEventTime;
-	private float nextEventTime;
-
+	private double lastBeat;
 	private Vector3 correctPlayerPos = Vector3.zero;
 	private Quaternion correctPlayerRot = Quaternion.identity;
 
 	static private Color[] playerColors = { Color.red, Color.green, Color.yellow, Color.blue };
 
-	// Use this for initialization
 	void Start ()
 	{
 		startPosition = transform.position;
 		endPosition = transform.position;
 
-		previousEventTime = (float)AudioSettings.dspTime;
-		nextEventTime = (float)AudioSettings.dspTime;
-
-		Debug.Log(photonView.owner.ID);
 		int color = photonView.owner.ID % playerColors.Length;
-
 		ModelController model = GetComponentInChildren<ModelController>();
 		model.SetColor(playerColors[color]);
 
@@ -40,7 +29,6 @@ public class RhythmMovement : Photon.MonoBehaviour
 			GetComponent<CharacterController>().enabled = false;
 	}
 	
-	// Update is called once per frame
 	void Update ()
 	{
 		if (!photonView.isMine)
@@ -50,9 +38,10 @@ public class RhythmMovement : Photon.MonoBehaviour
 		}
 		else
 		{
-			if (move)
+			double beatTime = MusicBeat.BeatTime;
+			float currentBeatFloor = Mathf.Floor((float) beatTime);
+			if (Mathf.Floor((float)lastBeat) != currentBeatFloor)
 			{
-				move = false;
 				Vector3 position = -Vector3.up;
 
 				position += transform.forward * Input.GetAxis("Vertical") + transform.right * Input.GetAxis("Horizontal");
@@ -68,7 +57,8 @@ public class RhythmMovement : Photon.MonoBehaviour
 				endPosition = startPosition + position.normalized * cubesPerBeat;
 			}
 
-			float time = Mathf.Min(1.0f, ((float)AudioSettings.dspTime - previousEventTime) / (nextEventTime - previousEventTime));
+			lastBeat = beatTime;
+			float time = (float) beatTime - Mathf.Floor((float)beatTime);
 			time = Easing.Circular.Out(time);
 			CharacterController controller = GetComponent<CharacterController>();
 
@@ -88,18 +78,6 @@ public class RhythmMovement : Photon.MonoBehaviour
 		{
 			this.correctPlayerPos = (Vector3)stream.ReceiveNext();
 			this.correctPlayerRot = (Quaternion)stream.ReceiveNext();
-		}
-	}
-
-
-	public void Beat(Vector2 data) {
-		//Debug.Log (data.x + " " + beatTime);
-		if(data.x == beatTime) {
-			move = true;
-			beatTime += 1f/myCompassBeat;
-			previousEventTime = data.y;
-			nextEventTime = previousEventTime + (60f/(MusicBeat.beatsPerMinute*(MusicBeat.compassDenominator/MusicBeat.compassNumerator)*myCompassBeat*velocity));
-
 		}
 	}
 }

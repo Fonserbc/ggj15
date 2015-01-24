@@ -4,7 +4,6 @@ using System.Collections;
 public class MusicShed : MonoBehaviour {
 
 	float beatsPerMinute = 90f;
-	float compassNumerator = 4f;
 	float compassDenominator = 4f;
 
 	float compassBeatDivision = 4f; // semicorcheras
