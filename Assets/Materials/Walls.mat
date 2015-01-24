@@ -24,7 +24,7 @@ Material:
       data:
         first:
           name: _OutlineWidth
-        second: .0374999903
+        second: .0285714194
     m_Colors:
       data:
         first:
@@ -32,12 +32,12 @@ Material:
         second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
-          name: _OutlineColor
-        second: {r: .602941155, g: 1, b: .950709939, a: 1}
-      data:
-        first:
           name: _BaseColor
         second: {r: .0196078438, g: .0196078438, b: .0588235296, a: 1}
+      data:
+        first:
+          name: _OutlineColor
+        second: {r: .602941155, g: 1, b: .950709939, a: 1}
       data:
         first:
           name: _TransformScale

@@ -28,7 +28,7 @@ Material:
       data:
         first:
           name: _FogStart
-        second: 100
+        second: 17.8571434
       data:
         first:
           name: _FogWidth
