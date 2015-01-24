@@ -18,7 +18,10 @@ class Bullet : Photon.MonoBehaviour
 		lifeTime -= Time.deltaTime;
 		if (lifeTime < 0.0f)
 		{
-			PhotonNetwork.Destroy(gameObject);
+			if (photonView.isMine)
+				PhotonNetwork.Destroy(gameObject);
+			else
+				enabled = false;
 		}
 	}
 }
