@@ -8372,8 +8372,8 @@ GameObject:
   - 114: {fileID: 1941986263}
   - 114: {fileID: 1941986265}
   - 114: {fileID: 1941986266}
-  - 114: {fileID: 1941986264}
   - 108: {fileID: 1941986267}
+  - 114: {fileID: 1941986264}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -8493,12 +8493,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1941986256}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 540278c087756074c9da55ee43728a22, type: 3}
+  m_Script: {fileID: 11500000, guid: 54113c1795094774bb2423c49bdd5869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gun: 0
-  bullet: {fileID: 116486, guid: 142987c46a233e943866a65526acd9c7, type: 2}
-  myCompassBeat: 1
+  bullet: {fileID: 116486, guid: ce4eb984d37adee4ba2b86737ab4cc35, type: 2}
 --- !u!114 &1941986265
 MonoBehaviour:
   m_ObjectHideFlags: 0

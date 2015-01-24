@@ -38,7 +38,10 @@ public class RhythmMovement : Photon.MonoBehaviour
 		}
 
 		if (!photonView.isMine)
+		{
 			GetComponent<CharacterController>().enabled = false;
+			GetComponent<Shoot>().enabled = false;
+		}
 	}
 	
 	void Update ()

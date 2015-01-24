@@ -60,6 +60,16 @@ public class MouseLook : MonoBehaviour {
 			transform.localEulerAngles = new Vector3(-rotationY, transform.localEulerAngles.y, 0);
 		}
 	}
+
+	void OnEnable()
+	{
+		Screen.lockCursor = true;
+	}
+
+	void OnDisable()
+	{
+		Screen.lockCursor = false;
+	}
 	
 	void Start ()
 	{
