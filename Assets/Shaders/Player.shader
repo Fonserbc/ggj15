@@ -15,7 +15,7 @@
 		// Upgrade NOTE: excluded shader from OpenGL ES 2.0 because it uses non-square matrices
 		#pragma exclude_renderers gles
 		#include "Assets/Shaders/CustomLight.cginc"
-		#pragma surface surf Lambert vertex:vert
+		#pragma surface surf BlinnPhong vertex:vert
 
 		uniform sampler2D _MainTex;
 		uniform float4 _BaseColor;
