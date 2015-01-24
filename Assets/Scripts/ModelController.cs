@@ -23,9 +23,9 @@ public class ModelController : MonoBehaviour {
 		localDir = transform.TransformDirection(worldDirection);
 		localDir.Normalize();
 		
-		anim.SetFloat("speedFactor", speedFactor);
-		anim.SetFloat("vAxis", localDir.z);
-		anim.SetFloat("hAxis", localDir.x);
+		anim.SetFloat("speedFactor", speedFactor > 0.0f? 1.0f : 0.0f);
+		anim.SetFloat("vAxis", localDir.z > 0.0f? 1.0f : (localDir.z < 0.0f? -1.0f : 0.0f));
+		anim.SetFloat("hAxis", localDir.x > 0.0f? 1.0f : (localDir.x < 0.0f? -1.0f : 0.0f));
 		anim.SetFloat("axisRelation", Mathf.Abs(localDir.x) - Mathf.Abs(localDir.z));
 	}
 	
