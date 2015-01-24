@@ -11,7 +11,6 @@ public class Shoot : MonoBehaviour {
 	public Gun gun = Gun.Pistol;
 	
 	public GameObject bullet;
-	float bulletSpeed = 30.0f;
 	float lastShoot = 0.0f;
 	
 	// Update is called once per frame
@@ -35,11 +34,10 @@ public class Shoot : MonoBehaviour {
 		}
 	}
 	
-	public void ShootBullet() {
-		GameObject b = (GameObject) GameObject.Instantiate(bullet, transform.position, transform.rotation);
-		b.rigidbody.velocity = transform.forward * bulletSpeed;
-		b.GetComponent<BulletColor>().SetColor(Color.red);
-		Destroy(b, 3);
+	public void ShootBullet()
+	{
+		GameObject b = PhotonNetwork.Instantiate("Bullet", transform.position, transform.rotation, 0);
+		
 		lastShoot = 0.2f;
 		light.enabled = true;
 	}

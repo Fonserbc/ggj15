@@ -100,16 +100,14 @@ public class MusicBeat : Photon.MonoBehaviour
 				else
 				{
 					double delta = netTime - remoteScheduledStartTime;
-					dspStartTime = dspTime + delta;
+					dspStartTime = dspTime - delta;
 
 					bool looped;
-					double dspCurrentBeat;
 					float musicTime = (float)(delta + 1.0);
-					CalculateLoop(ref musicTime, out looped, out dspCurrentBeat);
+					CalculateLoop(ref musicTime, out looped, out currentBeat);
 
 					music.time = musicTime;
 					music.PlayScheduled(dspTime + 1.0);
-					currentBeat = dspCurrentBeat;
 				}
 			}
 		}
@@ -123,14 +121,14 @@ public class MusicBeat : Photon.MonoBehaviour
 		return ((currentTime - startTime) * beatsPerMinute) / 60.0;
 	}
 
-	private void CalculateLoop(ref float musicTime, out bool looped, out double dspCurrentBeat)
+	private void CalculateLoop(ref float musicTime, out bool looped, out double dspBeat)
 	{
 		looped = false;
-		double dstCurrentTime = AudioSettings.dspTime;
+		double dspTime = AudioSettings.dspTime;
 		do
 		{
-			dspCurrentBeat = CalculateBeat(dstCurrentTime, dspStartTime);
-			if (dspCurrentBeat > lastBeat)
+			dspBeat = CalculateBeat(dspTime, dspStartTime);
+			if (dspBeat > lastBeat)
 			{
 				double beatsToGoBack = lastBeat - loopBeat;
 				double timeToGoBack = (60.0 * beatsToGoBack) / 90.0;
