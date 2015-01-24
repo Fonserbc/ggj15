@@ -48,7 +48,7 @@ public class MusicBeat : MonoBehaviour {
 
 		if(time >= nextEventTime) {
 			currentBeat += 1f/compassBeatDivision;
-			if(currentBeat == 180) {
+			if(currentBeat == 188) {
 				music.time -= 172*(60f/(beatsPerMinute*(compassDenominator/compassNumerator)));
 				currentBeat -= 172;
 			}
