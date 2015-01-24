@@ -120,7 +120,7 @@ public class MusicBeat : Photon.MonoBehaviour
 
 	private double CalculateBeat(double currentTime, double startTime)
 	{
-		return (((currentTime - startTime) * beatsPerMinute) / 60.0) - loopBeatOffset;
+		return ((currentTime - startTime) * beatsPerMinute) / 60.0;
 	}
 
 	private void CalculateLoop(ref float musicTime, out bool looped, out double dspCurrentBeat)
