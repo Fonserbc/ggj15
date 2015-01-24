@@ -10,7 +10,6 @@
 	private var flares : BloomAndLensFlares; 
 	private var blurSpread : float;
 
-
 function Start () {
 	flares = gameObject.GetComponent("BloomAndLensFlares")  as BloomAndLensFlares; 
 	blurSpread = flares.sepBlurSpread;
@@ -20,9 +19,12 @@ function Start () {
 }
 
 function Update () {
-    var time : float = beatTime - Mathf.Floor(beatTime);
-	time = Mathf.Abs(Mathf.Sin(time*Mathf.PI));
+	move = Mathf.FloorToInt(beatTime)%2 == 0;
+	var time : float = beatTime - Mathf.Floor(beatTime);
+	if(move) time = 1.0-Mathf.Abs(Mathf.Sin(time*Mathf.PI));
+	else time = 0.0;
 	flares.sepBlurSpread = Mathf.Lerp(0.1, blurSpread,time);
+
 }
 
 function BeatTime(_beatTime : float) {
