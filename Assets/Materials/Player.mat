@@ -32,12 +32,12 @@ Material:
         second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
-          name: _OutlineColor
-        second: {r: .00897492189, g: .18729715, b: .610294104, a: 1}
+          name: _BaseColor
+        second: {r: .107380144, g: .0769896209, b: .654411793, a: 1}
       data:
         first:
-          name: _BaseColor
-        second: {r: .0392156877, g: .0352941193, b: .109803922, a: 1}
+          name: _OutlineColor
+        second: {r: .00897492189, g: .18729715, b: .610294104, a: 1}
       data:
         first:
           name: _TransformScale

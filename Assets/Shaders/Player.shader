@@ -14,8 +14,8 @@
 		CGPROGRAM
 		// Upgrade NOTE: excluded shader from OpenGL ES 2.0 because it uses non-square matrices
 		#pragma exclude_renderers gles
-		#include "Assets/Shaders/CustomLight.cginc"
-		#pragma surface surf BlinnPhong vertex:vert
+		#include "Assets/Shaders/PlayerLight.cginc"
+		#pragma surface surf PlayerLight vertex:vert
 
 		uniform sampler2D _MainTex;
 		uniform float4 _BaseColor;
@@ -34,8 +34,7 @@
 		}
 		
 		void surf (Input IN, inout SurfaceOutput o) {
-			float4 c = tex2D (_MainTex, IN.uv_MainTex);
-			o.Albedo = c.rgb * _BaseColor.rgb;
+			o.Albedo = _BaseColor.rgb;
 			float3x2 scaleMatrix = { 
 				_TransformScale.z, _TransformScale.y, _TransformScale.x, _TransformScale.z, _TransformScale.x, _TransformScale.y
 			};
@@ -44,9 +43,12 @@
 			float2 ow = float2(_OutlineWidth,_OutlineWidth)/scaleChachi;
 			if ( uv.x < ow.x || uv.y < ow.y || uv.x > (1.0-ow.x) || uv.y > (1.0-ow.y)) {
 				o.Albedo = _OutlineColor.rgb;
+				o.Gloss = 1.0;
 			}
-			o.Alpha = c.a;
-			o.Specular = 1.0;
+			else {
+				o.Gloss = 0.0;
+			}
+			o.Alpha = 1.0;
 		}
 		ENDCG
 	} 
