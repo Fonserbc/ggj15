@@ -8515,7 +8515,7 @@ MonoBehaviour:
   sepBlurSpread: 4
   useSrcAlphaAsMask: 0
   bloomIntensity: 1
-  bloomThreshhold: -.0500000007
+  bloomThreshhold: 0
   bloomBlurIterations: 2
   lensflares: 0
   hollywoodFlareBlurIterations: 2
