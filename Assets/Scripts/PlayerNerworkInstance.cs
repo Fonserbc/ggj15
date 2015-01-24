@@ -17,12 +17,15 @@ public class PlayerNerworkInstance : MonoBehaviour
 	void CreatePlayerObject()
 	{
 		Vector3 position = Vector3.zero;
+		Quaternion rotation = Quaternion.identity;
 		if (SpawnPoints.Length > 0) {
 			int spawnPoint = Random.Range(0, SpawnPoints.Length - 1);
 			position = SpawnPoints[spawnPoint].transform.position;
+			rotation = SpawnPoints[spawnPoint].transform.rotation;
+
 		}
 
-		GameObject newPlayerObject = PhotonNetwork.Instantiate("Cube", position, Quaternion.identity, 0);
+		GameObject newPlayerObject = PhotonNetwork.Instantiate("Cube", position, rotation, 0);
 
 		if (beatObjects != null)
 			newPlayerObject.transform.SetParent(beatObjects.transform, false);
