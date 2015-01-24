@@ -99,8 +99,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 119561761}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 5, z: 6}
-  m_LocalScale: {x: 5, y: 20, z: 5}
+  m_LocalPosition: {x: 6, y: 7, z: 6}
+  m_LocalScale: {x: 5, y: 15, z: 5}
   m_Children: []
   m_Father: {fileID: 1987033872}
   m_RootOrder: 6
@@ -168,8 +168,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 131718470}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6, y: 5, z: -6}
-  m_LocalScale: {x: 5, y: 20, z: 5}
+  m_LocalPosition: {x: -6, y: 7, z: -6}
+  m_LocalScale: {x: 5, y: 15, z: 5}
   m_Children: []
   m_Father: {fileID: 1987033872}
   m_RootOrder: 9
@@ -454,8 +454,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 532298723}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106829}
-  m_LocalPosition: {x: 0, y: 5, z: 25}
-  m_LocalScale: {x: 2, y: 20, z: 49}
+  m_LocalPosition: {x: 0, y: 7, z: 25}
+  m_LocalScale: {x: 2, y: 15, z: 49}
   m_Children: []
   m_Father: {fileID: 1987033872}
   m_RootOrder: 12
@@ -723,8 +723,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 792411519}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106829}
-  m_LocalPosition: {x: 0, y: 5, z: -25}
-  m_LocalScale: {x: 2, y: 20, z: 49}
+  m_LocalPosition: {x: 0, y: 7, z: -25}
+  m_LocalScale: {x: 2, y: 15, z: 49}
   m_Children: []
   m_Father: {fileID: 1987033872}
   m_RootOrder: 13
@@ -792,8 +792,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 846826618}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6, y: 5, z: 6}
-  m_LocalScale: {x: 5, y: 20, z: 5}
+  m_LocalPosition: {x: -6, y: 7, z: 6}
+  m_LocalScale: {x: 5, y: 15, z: 5}
   m_Children: []
   m_Father: {fileID: 1987033872}
   m_RootOrder: 7
@@ -964,8 +964,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1002045620}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -25, y: 5, z: 0}
-  m_LocalScale: {x: 2, y: 20, z: 49}
+  m_LocalPosition: {x: -25, y: 7, z: 0}
+  m_LocalScale: {x: 2, y: 15, z: 49}
   m_Children: []
   m_Father: {fileID: 1987033872}
   m_RootOrder: 10
@@ -1033,8 +1033,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1134899663}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25, y: 5, z: 0}
-  m_LocalScale: {x: 2, y: 20, z: 49}
+  m_LocalPosition: {x: 25, y: 7, z: 0}
+  m_LocalScale: {x: 2, y: 15, z: 49}
   m_Children: []
   m_Father: {fileID: 1987033872}
   m_RootOrder: 11
@@ -1102,8 +1102,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1363886517}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 5, z: -6}
-  m_LocalScale: {x: 5, y: 20, z: 5}
+  m_LocalPosition: {x: 6, y: 7, z: -6}
+  m_LocalScale: {x: 5, y: 15, z: 5}
   m_Children: []
   m_Father: {fileID: 1987033872}
   m_RootOrder: 8
@@ -1199,7 +1199,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1507954042}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 15.5, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 50, y: 1, z: 50}
   m_Children: []
   m_Father: {fileID: 1987033872}
@@ -1695,7 +1695,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1941986256}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0923359e9e352a4b9b11c7b7161ad67, type: 3}
   m_Name: 
@@ -1715,7 +1715,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1941986256}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d35a90bed98554f4d8b92c9cd3cfbafa, type: 3}
   m_Name: 
@@ -1723,7 +1723,7 @@ MonoBehaviour:
   tweakMode: 0
   screenBlendMode: 1
   hdr: 0
-  sepBlurSpread: 4
+  sepBlurSpread: 3
   useSrcAlphaAsMask: 0
   bloomIntensity: 1
   bloomThreshhold: -.0500000007
@@ -1757,18 +1757,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1941986256}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b17828314e4b994fadfee7a781c50f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move: 0
-  beatTime: 0
   myCompassBeat: 1
-  previousEventTime: 0
-  nextEventTime: 0
-  flares: {fileID: 0}
-  blurSpread: 0
 --- !u!1 &1958108344
 GameObject:
   m_ObjectHideFlags: 0
