@@ -2494,6 +2494,8 @@ MonoBehaviour:
   music: {fileID: 875790060}
   beatObjects: {fileID: 1671094859}
   beatObjectsSched: {fileID: 707213387}
+  lastBeat: 188
+  loopBeat: 16
 --- !u!4 &875790062
 Transform:
   m_ObjectHideFlags: 0

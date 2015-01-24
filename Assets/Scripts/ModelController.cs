@@ -20,13 +20,15 @@ public class ModelController : MonoBehaviour {
 	
 	public void SetAnimationState(float speedFactor, Vector3 worldDirection) {
 	
-		localDir = transform.TransformDirection(worldDirection);
+		localDir = transform.parent.InverseTransformDirection(worldDirection);
 		localDir.Normalize();
 		
 		anim.SetFloat("speedFactor", speedFactor > 0.0f? 1.0f : 0.0f);
-		anim.SetFloat("vAxis", localDir.z > 0.0f? 1.0f : (localDir.z < 0.0f? -1.0f : 0.0f));
-		anim.SetFloat("hAxis", localDir.x > 0.0f? 1.0f : (localDir.x < 0.0f? -1.0f : 0.0f));
-		anim.SetFloat("axisRelation", Mathf.Abs(localDir.x) - Mathf.Abs(localDir.z));
+		anim.SetFloat("vAxis", localDir.x > 0.0f? 1.0f : (localDir.x < 0.0f? -1.0f : 0.0f));
+		anim.SetFloat("hAxis", localDir.z > 0.0f? 1.0f : (localDir.z < 0.0f? -1.0f : 0.0f));
+		anim.SetFloat("axisRelation", Mathf.Abs(localDir.z) - Mathf.Abs(localDir.x));
+		
+		
 	}
 	
 	public void SetColor (Color c) {
