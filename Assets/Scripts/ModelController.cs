@@ -7,18 +7,37 @@ public class ModelController : MonoBehaviour {
 	float outlineWidth = 0.01f;
 	
 	Animator anim;
+	Vector3 localDir = new Vector3();
 	
 	// Use this for initialization
 	void Start () {
 		// Color
-		Color baseColor = playerColor;
+		SetColor(playerColor);
+		
+		// Animations
+		anim = GetComponent<Animator>();
+	}
+	
+	public void SetAnimationState(float speedFactor, Vector3 worldDirection) {
+	
+		localDir = transform.TransformDirection(worldDirection);
+		localDir.Normalize();
+		
+		anim.SetFloat("speedFactor", speedFactor);
+		anim.SetFloat("vAxis", localDir.z);
+		anim.SetFloat("hAxis", localDir.x);
+		anim.SetFloat("axisRelation", Mathf.Abs(localDir.x) - Mathf.Abs(localDir.z));
+	}
+	
+	public void SetColor (Color c) {
+		Color baseColor = c;
 		float maxColor = Mathf.Max(baseColor.r, Mathf.Max(baseColor.g, baseColor.b));
 		float minFactor = 15.0f/255f;
 		baseColor.r = baseColor.r*minFactor/maxColor;
 		baseColor.g = baseColor.g*minFactor/maxColor;
 		baseColor.b = baseColor.b*minFactor/maxColor;
 		
-		Color outlineColor = playerColor;
+			Color outlineColor = c;
 		outlineColor.r = outlineColor.r/maxColor;
 		outlineColor.g = outlineColor.g/maxColor;
 		outlineColor.b = outlineColor.b/maxColor;
@@ -28,23 +47,5 @@ public class ModelController : MonoBehaviour {
 			r.material.SetColor("_BaseColor", baseColor);
 			r.material.SetFloat("_OutlineWidth", outlineWidth);
 		}
-		
-		// Animations
-		anim = GetComponent<Animator>();
-	}
-	
-	void Update() {
-		float hAxis = Input.GetAxis("Horizontal");
-		float vAxis = Input.GetAxis("Vertical");
-		
-		float absHAxis = Mathf.Abs(hAxis);
-		float absVAxis = Mathf.Abs(vAxis);
-		float axisRelation = absHAxis - absVAxis;
-		float speedFactor = Mathf.Max(absHAxis, absVAxis);
-		
-		anim.SetFloat("hAxis", hAxis);
-		anim.SetFloat("vAxis", vAxis);
-		anim.SetFloat("axisRelation", axisRelation);
-		anim.SetFloat("speedFactor", speedFactor);
 	}
 }
