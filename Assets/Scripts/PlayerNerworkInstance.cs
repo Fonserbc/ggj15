@@ -5,12 +5,11 @@ public class PlayerNerworkInstance : MonoBehaviour
 {
 	public GameObject beatObjects;
 	public GameObject Camera;
-
-	private int lastSpawn = 0;
 	public GameObject[] SpawnPoints;
 
 	void OnJoinedRoom()
 	{
+		Debug.Log("Local player ID: " + PhotonNetwork.player.ID);
 		CreatePlayerObject();
 	}
 
