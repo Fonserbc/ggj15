@@ -1798,7 +1798,7 @@ MonoBehaviour:
   tweakMode: 0
   screenBlendMode: 1
   hdr: 0
-  sepBlurSpread: 3
+  sepBlurSpread: 5
   useSrcAlphaAsMask: 0
   bloomIntensity: 1
   bloomThreshhold: 0

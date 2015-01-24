@@ -29,7 +29,7 @@ public class RhythmMovement : MonoBehaviour {
 	void Update () {
 		if(move) {
 			move = false;
-			Vector3 position = Vector3.zero;
+			Vector3 position = -Vector3.up;
 			if(Input.GetKey(KeyCode.A)) position -= transform.right;
 			if(Input.GetKey(KeyCode.D)) position += transform.right;
 			if(Input.GetKey(KeyCode.S)) position -= transform.forward;
