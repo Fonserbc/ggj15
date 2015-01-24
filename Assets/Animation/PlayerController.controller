@@ -16,13 +16,13 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   - m_Name: hAxis
     m_Type: 1
-    m_DefaultFloat: 0
+    m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
   - m_Name: axisRelation
     m_Type: 1
-    m_DefaultFloat: 0
+    m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
@@ -266,18 +266,18 @@ StateMachine:
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
     data:
-      first: {fileID: 110236652}
+      first: {fileID: 110233012}
       second:
-      - {fileID: 110175854}
-      - {fileID: 110107532}
+      - {fileID: 110143168}
     data:
       first: {fileID: 110259702}
       second:
       - {fileID: 110149744}
     data:
-      first: {fileID: 110233012}
+      first: {fileID: 110236652}
       second:
-      - {fileID: 110143168}
+      - {fileID: 110175854}
+      - {fileID: 110107532}
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

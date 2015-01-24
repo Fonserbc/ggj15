@@ -25,7 +25,6 @@
 
 		struct Input {
 			float2 uv_MainTex;
-			float3 worldPos;
 			float3 localNormal;
 		};
 
@@ -47,7 +46,7 @@
 				o.Albedo = _OutlineColor.rgb;
 			}
 			o.Alpha = c.a;
-			
+			o.Specular = 1.0;
 		}
 		ENDCG
 	} 

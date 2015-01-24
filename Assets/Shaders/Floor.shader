@@ -41,7 +41,9 @@
 		};
 		
 		void surf (Input IN, inout SurfaceOutput o) {
-			float fogFactor = min(1.0, IN.screenPos.z/15.0);
+			float startFog = 10.0;
+			float fogWidth = 5.0;
+			float fogFactor = min(1.0, max(0.0, IN.screenPos.z - startFog)/fogWidth);
 			float4 tex = tex2D (_MainTex, IN.uv_MainTex);
 			float3 baseColor = tex.rgb * _BaseColor.rgb;
 			float h = hex(abs(IN.worldPos.xz/2.0));

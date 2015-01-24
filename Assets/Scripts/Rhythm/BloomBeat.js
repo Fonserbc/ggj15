@@ -29,7 +29,7 @@ function Beat(data : Vector2) {
 	if(data.x == beatTime) {
 		move = true;
 		beatTime += 1.0/myCompassBeat;
-		flares.sepBlurSpread = 0.1;
+		if (flares != null) flares.sepBlurSpread = 0.1;
 		
 		previousEventTime = data.y;
 		nextEventTime = previousEventTime + (60f/(90*myCompassBeat));
