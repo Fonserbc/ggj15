@@ -78,8 +78,8 @@ public class RhythmMovement : Photon.MonoBehaviour
 		}
 		
 		float speedFactor = (float) beatTime - Mathf.Floor ((float)beatTime);
-		speedFactor = 1.0f - Easing.Circular.Out(speedFactor);
-		model.SetAnimationState(speedFactor, movementDirection);
+		speedFactor = 1.0f - Easing.Circular.In(speedFactor);
+		model.SetAnimationState(speedFactor, transform.InverseTransformDirection(movementDirection));
 	}
 
 	void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
