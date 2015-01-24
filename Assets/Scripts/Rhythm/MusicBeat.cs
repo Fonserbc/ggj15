@@ -48,7 +48,10 @@ public class MusicBeat : MonoBehaviour {
 
 		if(time >= nextEventTime) {
 			currentBeat += 1f/compassBeatDivision;
-
+			if(currentBeat == 180) {
+				music.time -= 172*(60f/(beatsPerMinute*(compassDenominator/compassNumerator)));
+				currentBeat -= 172;
+			}
 			Vector2 data = new Vector2(currentBeat, nextEventTime);	
 
 			beatObjects.BroadcastMessage("Beat", data, SendMessageOptions.DontRequireReceiver);
