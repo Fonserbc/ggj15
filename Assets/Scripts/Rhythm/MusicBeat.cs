@@ -15,7 +15,6 @@ public class MusicBeat : Photon.MonoBehaviour
 	public double loopBeat = 16;
 
 	private static double currentBeat = 0.0;
-	private static double loopBeatOffset = 0.0;
 	private static double netStartTime = -1.0;
 	private static double dspStartTime = -1.0;
 	private static int playerWhoIsIt = -1;
@@ -102,14 +101,47 @@ public class MusicBeat : Photon.MonoBehaviour
 				{
 					double delta = netTime - remoteScheduledStartTime;
 					dspStartTime = dspTime + delta;
-					music.time = (float) (delta + 1.0);
+
+					bool looped;
+					double dspCurrentBeat;
+					float musicTime = (float)(delta + 1.0);
+					CalculateLoop(ref musicTime, out looped, out dspCurrentBeat);
+
+					music.time = musicTime;
 					music.PlayScheduled(dspTime + 1.0);
+					currentBeat = dspCurrentBeat;
 				}
 			}
 		}
 
 		netStartTime = remoteScheduledStartTime;
 		Debug.Log("TaggedPlayer: " + playerID);
+	}
+
+	private double CalculateBeat(double currentTime, double startTime)
+	{
+		return (((currentTime - startTime) * beatsPerMinute) / 60.0) - loopBeatOffset;
+	}
+
+	private void CalculateLoop(ref float musicTime, out bool looped, out double dspCurrentBeat)
+	{
+		looped = false;
+		double dstCurrentTime = AudioSettings.dspTime;
+		do
+		{
+			dspCurrentBeat = CalculateBeat(dstCurrentTime, dspStartTime);
+			if (dspCurrentBeat > lastBeat)
+			{
+				double beatsToGoBack = lastBeat - loopBeat;
+				double timeToGoBack = (60.0 * beatsToGoBack) / 90.0;
+				musicTime -= (float)timeToGoBack;
+				dspStartTime += timeToGoBack;
+				looped = true;
+			}
+			else
+				break;
+		}
+		while (true);
 	}
 	
 	void Update ()
@@ -123,15 +155,13 @@ public class MusicBeat : Photon.MonoBehaviour
 		}
 		else
 		{
-			double dstCurrentTime = AudioSettings.dspTime;
-			double dspCurrentBeat = (((dstCurrentTime - dspStartTime) * beatsPerMinute) / 60.0) - loopBeatOffset;
-			if (dspCurrentBeat > lastBeat)
-			{
-				double beatsToGoBack = lastBeat - loopBeat;
-				double timeToGoBack = (60.0 * beatsToGoBack) / 90.0;
-				music.time -= (float) timeToGoBack;
-				loopBeatOffset += beatsToGoBack;
-			}
+			bool looped;
+			double dspCurrentBeat;
+			float musicTime = music.time;
+			CalculateLoop(ref musicTime, out looped, out dspCurrentBeat);
+			
+			if (looped)
+				music.time = musicTime;
 
 			currentBeat = dspCurrentBeat;
 			beatObjects.BroadcastMessage("BeatTime", currentBeat, SendMessageOptions.DontRequireReceiver);
