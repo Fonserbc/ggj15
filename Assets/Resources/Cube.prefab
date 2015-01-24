@@ -315,6 +315,8 @@ GameObject:
   - 114: {fileID: 11451810}
   - 114: {fileID: 11482978}
   - 143: {fileID: 14336238}
+  - 114: {fileID: 11475552}
+  - 108: {fileID: 10882148}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1017,6 +1019,41 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!108 &10882148
+Light:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 151812}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Type: 2
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 2
+  m_Range: 5
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_Strength: 1
+    m_Bias: .0500000007
+    m_Softness: 4
+    m_SoftnessFade: 1
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_ActuallyLightmapped: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 1
+  m_ShadowSamples: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_IndirectIntensity: 1
+  m_AreaSize: {x: 1, y: 1}
 --- !u!114 &11448522
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1208,6 +1245,19 @@ MonoBehaviour:
   myCompassBeat: 1
   cubesPerBeat: 4
   velocity: 1
+--- !u!114 &11475552
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 151812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54113c1795094774bb2423c49bdd5869, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gun: 0
+  bullet: {fileID: 116486, guid: ce4eb984d37adee4ba2b86737ab4cc35, type: 2}
 --- !u!114 &11482978
 MonoBehaviour:
   m_ObjectHideFlags: 1

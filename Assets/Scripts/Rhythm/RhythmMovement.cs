@@ -17,7 +17,11 @@ public class RhythmMovement : Photon.MonoBehaviour
 	
 	private ModelController model;
 	
-	static private Color[] playerColors = { Color.red, Color.green, Color.yellow, Color.blue };
+	static public Color[] playerColors = { Color.red, Color.green, Color.yellow, Color.blue };
+	static public Color PlayerColor(int id)
+	{
+		return playerColors[id % playerColors.Length];
+	}
 
 	void Start ()
 	{
@@ -26,12 +30,11 @@ public class RhythmMovement : Photon.MonoBehaviour
 		movementDirection = Vector3.zero;
 
 		// Set Colors
-		int color = photonView.owner.ID % playerColors.Length;
 		model = GetComponentInChildren<ModelController>();
-		model.SetColor(playerColors[color]);
+		model.SetColor(PlayerColor(photonView.owner.ID));
 		
 		foreach (Light l in GetComponentsInChildren<Light>()) {
-			l.color = playerColors[color];
+			l.color = PlayerColor(photonView.owner.ID);
 		}
 
 		if (!photonView.isMine)
