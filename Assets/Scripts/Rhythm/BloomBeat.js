@@ -21,7 +21,7 @@ function Start () {
 function Update () {
 	move = Mathf.FloorToInt(beatTime)%2 == 0;
 	var time : float = beatTime - Mathf.Floor(beatTime);
-	if(move) time = 1.0-Mathf.Abs(Mathf.Sin(time*Mathf.PI));
+	if(move) time = Mathf.Abs(Mathf.Sin(time*Mathf.PI));
 	else time = 0.0;
 	flares.sepBlurSpread = Mathf.Lerp(0.1, blurSpread,time);
 
