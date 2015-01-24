@@ -11,25 +11,14 @@ public class MusicBeat : Photon.MonoBehaviour
 	public GameObject beatObjects;
 	public GameObject beatObjectsSched;
 
-	private static double currentBeat = 0f;
-	private static double startTime = -1.0f;
+	public double lastBeat = 188;
+	public double loopBeat = 16;
+
+	private static double currentBeat = 0.0;
+	private static double loopBeatOffset = 0.0;
+	private static double netStartTime = -1.0;
+	private static double dspStartTime = -1.0;
 	private static int playerWhoIsIt = -1;
-
-	public static double Time
-	{
-		get
-		{
-			return PhotonNetwork.time;
-		}
-	}
-
-	public static double StartTime
-	{
-		get
-		{
-			return startTime;
-		}
-	}
 
 	public static double BeatTime
 	{
@@ -58,7 +47,7 @@ public class MusicBeat : Photon.MonoBehaviour
 	{
 		if (PhotonNetwork.isMasterClient)
 		{
-			TagPlayer(playerWhoIsIt, startTime);
+			TagPlayer(playerWhoIsIt, netStartTime);
 		}
 	}
 
@@ -69,7 +58,7 @@ public class MusicBeat : Photon.MonoBehaviour
 		{
 			if (player.ID == playerWhoIsIt)
 			{
-				TagPlayer(PhotonNetwork.player.ID, startTime);
+				TagPlayer(PhotonNetwork.player.ID, netStartTime);
 			}
 		}
 	}
@@ -93,7 +82,7 @@ public class MusicBeat : Photon.MonoBehaviour
 	void TaggedPlayer(int playerID, double remoteScheduledStartTime)
 	{
 		playerWhoIsIt = playerID;
-		if (startTime != remoteScheduledStartTime)
+		if (netStartTime != remoteScheduledStartTime)
 		{
 			if (remoteScheduledStartTime < 0.0f)
 			{
@@ -101,37 +90,49 @@ public class MusicBeat : Photon.MonoBehaviour
 			}
 			else
 			{
-				double time = Time;
+				double netTime = PhotonNetwork.time;
 				double dspTime = AudioSettings.dspTime;
-				if (time < remoteScheduledStartTime)
+				if (netTime < remoteScheduledStartTime)
 				{
-					double delta = remoteScheduledStartTime - time;
+					double delta = remoteScheduledStartTime - netTime;
+					dspStartTime = dspTime + delta;
 					music.PlayScheduled(dspTime + delta);
 				}
 				else
 				{
-					double delta = time - remoteScheduledStartTime;
+					double delta = netTime - remoteScheduledStartTime;
 					music.time = (float) (delta + 1.0);
 					music.PlayScheduled(dspTime + 1.0);
 				}
 			}
 		}
 
-		startTime = remoteScheduledStartTime;
+		netStartTime = remoteScheduledStartTime;
 		Debug.Log("TaggedPlayer: " + playerID);
 	}
 	
 	void Update ()
 	{
-		if (startTime < 0.0f)
+		double netCurrentTime = PhotonNetwork.time;
+		if (netStartTime < 0.0f)
 		{
 			if (PhotonNetwork.player.ID == playerWhoIsIt &&
 				Input.GetKeyDown(KeyCode.Space))
-				ScenePhotonView.RPC("TaggedPlayer", PhotonTargets.All, playerWhoIsIt, Time + 3.0);
+				ScenePhotonView.RPC("TaggedPlayer", PhotonTargets.All, playerWhoIsIt, netCurrentTime + 3.0);
 		}
 		else
 		{
-			currentBeat = ((Time - startTime) * beatsPerMinute) / 60.0;
+			double dstCurrentTime = AudioSettings.dspTime;
+			double dspCurrentBeat = (((dstCurrentTime - dspStartTime) * beatsPerMinute) / 60.0) - loopBeatOffset;
+			if (dspCurrentBeat > lastBeat)
+			{
+				double beatsToGoBack = lastBeat - loopBeat;
+				double timeToGoBack = (60.0 * beatsToGoBack) / 90.0;
+				music.time -= (float) timeToGoBack;
+				loopBeatOffset += beatsToGoBack;
+			}
+
+			currentBeat = dspCurrentBeat;
 			beatObjects.BroadcastMessage("BeatTime", currentBeat, SendMessageOptions.DontRequireReceiver);
 		}
 	}
