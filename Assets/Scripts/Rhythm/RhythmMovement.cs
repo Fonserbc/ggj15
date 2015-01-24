@@ -26,6 +26,7 @@ public class RhythmMovement : Photon.MonoBehaviour
 	{
 		startPosition = transform.position;
 		endPosition = transform.position;
+
 		previousEventTime = (float)AudioSettings.dspTime;
 		nextEventTime = (float)AudioSettings.dspTime;
 
@@ -34,6 +35,9 @@ public class RhythmMovement : Photon.MonoBehaviour
 
 		ModelController model = GetComponentInChildren<ModelController>();
 		model.SetColor(playerColors[color]);
+
+		if (!photonView.isMine)
+			GetComponent<CharacterController>().enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -63,10 +67,13 @@ public class RhythmMovement : Photon.MonoBehaviour
 				startPosition = transform.position;
 				endPosition = startPosition + position.normalized * cubesPerBeat;
 			}
+
 			float time = Mathf.Min(1.0f, ((float)AudioSettings.dspTime - previousEventTime) / (nextEventTime - previousEventTime));
 			time = Easing.Circular.Out(time);
 			CharacterController controller = GetComponent<CharacterController>();
-			if (startPosition != endPosition) controller.Move(Vector3.Lerp(startPosition, endPosition, time) - transform.position);
+
+			if (startPosition != endPosition)
+				controller.Move(Vector3.Lerp(startPosition, endPosition, time) - transform.position);
 		}
 	}
 
@@ -74,14 +81,11 @@ public class RhythmMovement : Photon.MonoBehaviour
 	{
 		if (stream.isWriting)
 		{
-			// We own this player: send the others our data
 			stream.SendNext(transform.position);
 			stream.SendNext(transform.rotation);
-
 		}
 		else
 		{
-			// Network player, receive data
 			this.correctPlayerPos = (Vector3)stream.ReceiveNext();
 			this.correctPlayerRot = (Quaternion)stream.ReceiveNext();
 		}
