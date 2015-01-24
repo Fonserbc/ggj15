@@ -41,12 +41,13 @@ public class RhythmMovement : MonoBehaviour {
 		}
 		float time = Mathf.Min (1.0f,((float) AudioSettings.dspTime - previousEventTime) / (nextEventTime - previousEventTime));
 		time = Easing.Circular.Out (time);
-		if((float) AudioSettings.dspTime <= nextEventTime) rigidbody.MovePosition(Vector3.Lerp(startPosition, endPosition,time));
+		CharacterController controller = GetComponent<CharacterController>();
+		if(startPosition != endPosition) controller.Move(Vector3.Lerp(startPosition, endPosition,time)-transform.position);
 
 	}
 
 	public void Beat(Vector2 data) {
-		Debug.Log (data.x + " " + beatTime);
+		//Debug.Log (data.x + " " + beatTime);
 		if(data.x == beatTime) {
 			move = true;
 			beatTime += 1f/myCompassBeat;

@@ -28,9 +28,9 @@ GameObject:
   - 65: {fileID: 6551810}
   - 23: {fileID: 2351810}
   - 114: {fileID: 11451810}
-  - 54: {fileID: 5451810}
   - 114: {fileID: 11482978}
   - 114: {fileID: 11497096}
+  - 143: {fileID: 14336238}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -90,21 +90,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 151812}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &5451810
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 151812}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!65 &6551810
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -206,9 +191,9 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 1
+    InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 8
-    InterpolateLerpSpeed: 1
+    InterpolateLerpSpeed: 8
     InterpolateMoveTowardsAcceleration: 2
     InterpolateMoveTowardsDeceleration: 2
     InterpolateSpeedCurve:
@@ -251,6 +236,20 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!143 &14336238
+CharacterController:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 151812}
+  serializedVersion: 2
+  m_Height: 1
+  m_Radius: .5
+  m_SlopeLimit: 45
+  m_StepOffset: .300000012
+  m_SkinWidth: .0799999982
+  m_MinMoveDistance: 0
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
