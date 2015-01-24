@@ -18,7 +18,7 @@ public class PlayerNerworkInstance : MonoBehaviour
 		Vector3 position = Vector3.zero;
 		Quaternion rotation = Quaternion.identity;
 		if (SpawnPoints.Length > 0) {
-			int spawnPoint = Random.Range(0, SpawnPoints.Length - 1);
+			int spawnPoint = PhotonNetwork.player.ID % SpawnPoints.Length;
 			position = SpawnPoints[spawnPoint].transform.position;
 			rotation = SpawnPoints[spawnPoint].transform.rotation;
 		}
