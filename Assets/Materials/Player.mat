@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Walls
-  m_Shader: {fileID: 4800000, guid: 0b82299f680684741bf3e444dd90658b, type: 3}
+  m_Name: Player
+  m_Shader: {fileID: 4800000, guid: bab4505fa2bc9b748bd7b9f0333ae460, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -24,7 +24,7 @@ Material:
       data:
         first:
           name: _OutlineWidth
-        second: .0285714194
+        second: .0375000015
     m_Colors:
       data:
         first:
@@ -33,11 +33,11 @@ Material:
       data:
         first:
           name: _OutlineColor
-        second: {r: .602941155, g: 1, b: .950709939, a: 1}
+        second: {r: .00897492189, g: .18729715, b: .610294104, a: 1}
       data:
         first:
           name: _BaseColor
-        second: {r: .0196078438, g: .0196078438, b: .0588235296, a: 1}
+        second: {r: .0392156877, g: .0352941193, b: .109803922, a: 1}
       data:
         first:
           name: _TransformScale
