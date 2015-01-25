@@ -617,7 +617,7 @@ ParticleAnimator:
   force: {x: 0, y: 0, z: 0}
   damping: .00999999978
   stopSimulation: 0
-  autodestruct: 1
+  autodestruct: 0
 --- !u!23 &2348524
 Renderer:
   m_ObjectHideFlags: 1
@@ -925,8 +925,8 @@ ParticleRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 168070}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
