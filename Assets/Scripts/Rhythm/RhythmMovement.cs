@@ -44,6 +44,8 @@ public class RhythmMovement : Photon.MonoBehaviour
 		model = GetComponentInChildren<ModelController>();
 		model.SetColor(PlayerColor(photonView.owner.ID));
 		
+		GetComponentInChildren<ParticleRenderer>().gameObject.renderer.material.color = PlayerColor(photonView.owner.ID);
+		
 		foreach (Light l in GetComponentsInChildren<Light>()) {
 			l.color = PlayerColor(photonView.owner.ID);
 		}
