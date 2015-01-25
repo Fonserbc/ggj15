@@ -14,6 +14,7 @@ GameObject:
   - 114: {fileID: 11455560}
   - 135: {fileID: 13565580}
   - 114: {fileID: 11427510}
+  - 23: {fileID: 2331276}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: Untagged
@@ -94,6 +95,26 @@ ParticleAnimator:
   damping: .00999999978
   stopSimulation: 0
   autodestruct: 0
+--- !u!23 &2331276
+Renderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116486}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!26 &2643502
 ParticleRenderer:
   m_ObjectHideFlags: 1
