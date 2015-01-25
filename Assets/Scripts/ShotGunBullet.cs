@@ -3,7 +3,7 @@ using UnityEngine;
 
 class ShotGunBullet : Photon.MonoBehaviour
 {
-	float bulletSpeed = 30.0f;
+	float bulletSpeed = 25.0f;
 	double initialBeatTime;
 	bool started = false;
 	float lifeTime = 3.0f;
@@ -13,8 +13,8 @@ class ShotGunBullet : Photon.MonoBehaviour
 	{
 		BulletColor bcollor = GetComponent<BulletColor>();
 		bcollor.SetColor(RhythmMovement.PlayerColor(photonView.owner.ID));
-		if (photonView.isMine) transform.SetParent (Camera.main.transform, true);
-		else enabled = false;
+		//if (photonView.isMine) transform.SetParent (Camera.main.transform, true);
+		//else enabled = false;
 
 		initialBeatTime = MusicBeat.BeatTime;
 		lastBeat = MusicBeat.BeatTime;
