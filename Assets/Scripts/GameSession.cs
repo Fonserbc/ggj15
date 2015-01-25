@@ -10,6 +10,7 @@ public class GameSession : Photon.MonoBehaviour {
 	public Text deathsUI;
 	public Text timeUI;
 	public Text statsUI;
+	public int gameDurationInBeats = 270;
 	
 	private static PhotonView ScenePhotonView;
 	
@@ -172,8 +173,8 @@ public class GameSession : Photon.MonoBehaviour {
 			if (entry.Key == PhotonNetwork.player.ID)
 			{
 				if (timeUI != null) {
-					float timer = (float)60.0-(float)MusicBeat.BeatTime;
-					timeUI.text = "" + Mathf.Floor(timer);
+					float timer = (float)gameDurationInBeats-Mathf.Floor ((float)MusicBeat.BeatTimeFromBegin);
+					timeUI.text = "" + (timer <= gameDurationInBeats ? timer.ToString("#") : "");
 				}
 				if (healthUI != null)
 					healthUI.text = "" + Mathf.Floor(entry.Value.health*20);
