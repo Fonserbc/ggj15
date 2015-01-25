@@ -54,6 +54,7 @@ public class GameSession : Photon.MonoBehaviour {
 	{
 		if (PhotonNetwork.isMasterClient)
 		{
+			Debug.Log ("Restarting");
 			foreach (KeyValuePair<int, PlayerInfo> entry in localFrags)
 			{
 				entry.Value.Set(maxHealth,0,0);
@@ -223,6 +224,7 @@ public class GameSession : Photon.MonoBehaviour {
 					timeUI.text = "" + (timer <= gameDurationInBeats ? timer.ToString("#") : "");
 					
 					if (!gameFinished && PhotonNetwork.isMasterClient && timer <= 0.0f) {
+						Debug.Log("--------------Finishing");
 						ScenePhotonView.RPC("FinishGame", PhotonTargets.All);
 					}
 				}
