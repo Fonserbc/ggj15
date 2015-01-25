@@ -146,6 +146,7 @@ public class GameSession : Photon.MonoBehaviour {
 	
 	void OnGUI()
 	{
+		/*
 		string s = "";
 		foreach (KeyValuePair<int, PlayerInfo> entry in localFrags)
 		{
@@ -153,6 +154,7 @@ public class GameSession : Photon.MonoBehaviour {
 		}
 		
 		GUI.Label(new Rect(10, 10,200,200), s);
+		 */
 	}
 
 	void Update()

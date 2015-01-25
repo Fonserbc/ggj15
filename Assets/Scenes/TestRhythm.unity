@@ -3348,7 +3348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AutoConnect: 0
   Version: 1
-  MaxPlayers: 4
+  MaxPlayers: 8
 --- !u!4 &703087770
 Transform:
   m_ObjectHideFlags: 0
