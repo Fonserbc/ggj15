@@ -99,8 +99,14 @@ public class GameSession : Photon.MonoBehaviour {
 		{
 			if (localFrags.ContainsKey(fromPlayer) && localFrags.ContainsKey(toPlayer))
 			{
-				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, fromPlayer, true, 0, 1, 0);
-				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, toPlayer, true, -1, 0, 1);
+				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, fromPlayer, true, 0, 0, 0);
+				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, toPlayer, true, -1, 0, 0);
+				
+				if (localFrags[toPlayer].health <= 0) {
+					ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, fromPlayer, true, 0, 1, 0);
+					ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, toPlayer, true, maxHealth, 0, 1);
+					ScenePhotonView.RPC("PlayerDead", PhotonTargets.All, toPlayer);
+				}
 			}
 			else
 			{
