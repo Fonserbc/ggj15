@@ -3827,9 +3827,10 @@ GameObject:
   - 82: {fileID: 875790060}
   - 114: {fileID: 875790061}
   - 114: {fileID: 875790063}
+  - 114: {fileID: 875790064}
   m_Layer: 0
   m_Name: WaapDooBeeDoo
-  m_TagString: Untagged
+  m_TagString: Logic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3947,6 +3948,17 @@ MonoBehaviour:
   viewIdField: 1
   instantiationId: 1
   isRuntimeInstantiated: 0
+--- !u!114 &875790064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 875790059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f09cb9c31bf73174fab7e7dba8dc3066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &881516956
 Prefab:
   m_ObjectHideFlags: 0

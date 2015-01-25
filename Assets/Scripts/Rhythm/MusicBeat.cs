@@ -37,9 +37,12 @@ public class MusicBeat : Photon.MonoBehaviour
 
 	private static PhotonView ScenePhotonView;
 
+	private GameSession session;
+
 	void Start()
 	{
 		ScenePhotonView = this.GetComponent<PhotonView>();
+		session = this.GetComponent<GameSession>();
 	}
 
 	void OnPhotonPlayerConnected(PhotonPlayer player)
@@ -47,6 +50,7 @@ public class MusicBeat : Photon.MonoBehaviour
 		if (PhotonNetwork.isMasterClient)
 		{
 			TagPlayer(playerWhoIsIt, netStartTime);
+			session.NewPlayerConnected(player.ID);
 		}
 	}
 
