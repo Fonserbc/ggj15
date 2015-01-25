@@ -100,7 +100,7 @@ public class GameSession : Photon.MonoBehaviour {
 	{
 		if (PhotonNetwork.isMasterClient)
 		{
-			if (localFrags.ContainsKey(fromPlayer) && localFrags.ContainsKey(toPlayer) && localFrags[toPlayer].health <= localHealth)
+			if (localFrags.ContainsKey(fromPlayer) && localFrags.ContainsKey(toPlayer) && localFrags[toPlayer].health <= localHealth && (Time.time - localFrags[toPlayer].lastDead > 0.5f))
 			{
 				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, fromPlayer, 	true, 	0.0f, 			0, 	0);
 				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, toPlayer, 	true, 	-howMuch, 	0, 	0);
