@@ -15,7 +15,6 @@ public class GameSession : Photon.MonoBehaviour {
 		public float health;
 		public int kills;
 		public int deaths;
-		public bool diedNow = false;
 		
 		public PlayerInfo (float h, int k, int d) {
 			health = h;
@@ -96,11 +95,11 @@ public class GameSession : Photon.MonoBehaviour {
 	}
 	
 	[RPC]
-	void NewFrag (int fromPlayer, int toPlayer, float howMuch)
+	void NewFrag (int fromPlayer, int toPlayer, float localHealth, float howMuch)
 	{
 		if (PhotonNetwork.isMasterClient)
 		{
-			if (localFrags.ContainsKey(fromPlayer) && localFrags.ContainsKey(toPlayer) && !localFrags[toPlayer].diedNow)
+			if (localFrags.ContainsKey(fromPlayer) && localFrags.ContainsKey(toPlayer) && localFrags[toPlayer].health <= localHealth)
 			{
 				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, fromPlayer, 	true, 	0.0f, 			0, 	0);
 				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, toPlayer, 	true, 	-howMuch, 	0, 	0);
@@ -109,7 +108,6 @@ public class GameSession : Photon.MonoBehaviour {
 					ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, 	fromPlayer, true, 	0.0f, 			1,	0);
 					ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, 	toPlayer, 	true, 	maxHealth, 	0,	1);
 					ScenePhotonView.RPC("PlayerDead", PhotonTargets.All, toPlayer);
-					localFrags[toPlayer].diedNow = true;
 				}
 			}
 			else
@@ -141,7 +139,7 @@ public class GameSession : Photon.MonoBehaviour {
 	
 	public void Hit (int toPlayer, float howMuch)
 	{
-		ScenePhotonView.RPC("NewFrag", PhotonTargets.MasterClient, PhotonNetwork.player.ID, toPlayer, howMuch);
+		ScenePhotonView.RPC("NewFrag", PhotonTargets.MasterClient, PhotonNetwork.player.ID, toPlayer, localFrags[toPlayer].health, howMuch);
 	}
 	
 	void OnGUI()
@@ -174,8 +172,6 @@ public class GameSession : Photon.MonoBehaviour {
 				
 				break;
 			}
-			
-			entry.Value.diedNow = false;
 		}
 	}
 }
