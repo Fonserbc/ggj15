@@ -17,7 +17,18 @@ public class RhythmMovement : Photon.MonoBehaviour
 	
 	private ModelController model;
 	
-	static public Color[] playerColors = {Color.white, Color.red,Color.green, Color.yellow, Color.blue , Color.red*0.3f+Color.blue, Color.red+Color.green*0.3f, Color.blue*0.3f+Color.green};
+	static public Color[] playerColors =
+	{
+		Color.white,
+		Color.red,
+		Color.green,
+		Color.yellow,
+		Color.blue ,
+		new Color (0.3f, 0.0f, 1.0f),
+		new Color (1.0f, 0.3f, 0.0f),
+		new Color (0.0f, 1.0f, 0.3f)
+	};
+
 	static public Color PlayerColor(int id)
 	{
 		return playerColors[id % playerColors.Length];

@@ -26,7 +26,7 @@ public class WaapConnectAndJoinRandom : Photon.MonoBehaviour
 	{
 		if (ConnectInUpdate && AutoConnect && !PhotonNetwork.connected)
 		{
-			ConsoleLog.Instance.Log("Connecting....");
+			Debug.Log("Connecting....");
 
 			ConnectInUpdate = false;
 			PhotonNetwork.ConnectUsingSettings(Version + "." + Application.loadedLevel);
@@ -38,14 +38,14 @@ public class WaapConnectAndJoinRandom : Photon.MonoBehaviour
 	public virtual void OnConnectedToMaster()
 	{
 		if (PhotonNetwork.networkingPeer.AvailableRegions != null)
-			ConsoleLog.Instance.Log("List of available regions counts " + PhotonNetwork.networkingPeer.AvailableRegions.Count + ". First: " + PhotonNetwork.networkingPeer.AvailableRegions[0] + " \t Current Region: " + PhotonNetwork.networkingPeer.CloudRegion);
-		ConsoleLog.Instance.Log("Joining room....");
+			Debug.Log("List of available regions counts " + PhotonNetwork.networkingPeer.AvailableRegions.Count + ". First: " + PhotonNetwork.networkingPeer.AvailableRegions[0] + " \t Current Region: " + PhotonNetwork.networkingPeer.CloudRegion);
+		Debug.Log("Joining room....");
 		PhotonNetwork.JoinRandomRoom();
 	}
 
 	public virtual void OnPhotonRandomJoinFailed()
 	{
-		ConsoleLog.Instance.Log("No room available. Creating room....");
+		Debug.Log("No room available. Creating room....");
 		PhotonNetwork.CreateRoom(null, new RoomOptions() { maxPlayers = MaxPlayers }, null);
 	}
 
@@ -53,16 +53,16 @@ public class WaapConnectAndJoinRandom : Photon.MonoBehaviour
 
 	public virtual void OnFailedToConnectToPhoton(DisconnectCause cause)
 	{
-		ConsoleLog.Instance.Log("Cause: " + cause);
+		Debug.Log("Cause: " + cause);
 	}
 
 	public void OnJoinedRoom()
 	{
-		ConsoleLog.Instance.Log("Joined room.");
+		Debug.Log("Joined room.");
 	}
 
 	public void OnJoinedLobby()
 	{
-		ConsoleLog.Instance.Log("Joined Lobby.");
+		Debug.Log("Joined Lobby.");
 	}
 }

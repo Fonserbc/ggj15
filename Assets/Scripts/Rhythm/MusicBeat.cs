@@ -18,6 +18,7 @@ public class MusicBeat : Photon.MonoBehaviour
 	private static double netStartTime = -1.0;
 	private static double dspStartTime = -1.0;
 	private static int playerWhoIsIt = -1;
+	private static double netStartTimeSent = -1.0f;
 
 	public static double BeatTime
 	{
@@ -152,8 +153,10 @@ public class MusicBeat : Photon.MonoBehaviour
 		if (netStartTime < 0.0f)
 		{
 			if (PhotonNetwork.player.ID == playerWhoIsIt &&
-				Input.GetKeyDown(KeyCode.Space))
+				PhotonNetwork.playerList.Length > 1)
+			{
 				ScenePhotonView.RPC("TaggedPlayer", PhotonTargets.All, playerWhoIsIt, netCurrentTime + 3.0);
+			}
 		}
 		else
 		{
