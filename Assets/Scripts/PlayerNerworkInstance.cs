@@ -42,6 +42,12 @@ public class PlayerNerworkInstance : MonoBehaviour
 			if (Camera != null)
 				Camera.transform.SetParent(player.transform, false);
 		}
+		else {
+			player.transform.position = position;
+			player.transform.rotation = rotation;
+			
+			player.GetComponent<RhythmMovement>().Die();
+		}
 	}
 	
 	public void Die() {
