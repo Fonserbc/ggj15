@@ -3,7 +3,7 @@ using UnityEngine;
 
 class ShotGunBullet : Photon.MonoBehaviour
 {
-	float bulletSpeed = 50.0f;
+	float bulletSpeed = 30.0f;
 	double initialBeatTime;
 	bool started = false;
 	float lifeTime = 3.0f;
