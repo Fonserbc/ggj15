@@ -17,6 +17,8 @@ public class RhythmMovement : Photon.MonoBehaviour
 	
 	private ModelController model;
 	
+	private float lifeTime = 0.0f;
+	
 	static public Color[] playerColors =
 	{
 		Color.white,
@@ -60,6 +62,7 @@ public class RhythmMovement : Photon.MonoBehaviour
 	
 	void Update ()
 	{
+	
 		double beatTime = MusicBeat.BeatTime;
 		float currentBeatFloor = Mathf.Floor((float) beatTime);
 		
