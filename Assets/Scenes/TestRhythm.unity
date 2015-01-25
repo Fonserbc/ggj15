@@ -4478,11 +4478,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2121178421}
   m_RootOrder: 1
-  m_AnchorMin: {x: .5, y: 1}
-  m_AnchorMax: {x: .5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -40}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 32, y: -64}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &842451697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5604,8 +5604,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: .627450943, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 86a517bdaec8e604da1ec69965a7c946, type: 3}
-    m_FontSize: 20
+    m_Font: {fileID: 12800000, guid: 97dac11767d400c4f93b38fbc9ad7d70, type: 3}
+    m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
