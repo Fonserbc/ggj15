@@ -15,16 +15,25 @@ public class MusicBeat : Photon.MonoBehaviour
 	public double loopBeat = 16;
 
 	private static double currentBeat = 0.0;
+	private static double currentBeatReal = 0.0;
 	private static double netStartTime = -1.0;
 	private static double dspStartTime = -1.0;
+	private static double dspStartTimeReal = -1.0;
 	private static int playerWhoIsIt = -1;
-	private static double netStartTimeSent = -1.0f;
 
 	public static double BeatTime
 	{
 		get
 		{
 			return currentBeat;
+		}
+	}
+
+	public static double BeatTimeFromBegin
+	{
+		get
+		{
+			return currentBeatReal;
 		}
 	}
 
@@ -102,12 +111,14 @@ public class MusicBeat : Photon.MonoBehaviour
 				{
 					double delta = remoteScheduledStartTime - netTime;
 					dspStartTime = dspTime + delta;
+					dspStartTimeReal = dspStartTime;
 					music.PlayScheduled(dspTime + delta);
 				}
 				else
 				{
 					double delta = netTime - remoteScheduledStartTime;
 					dspStartTime = dspTime - delta;
+					dspStartTimeReal = dspStartTime;
 
 					bool looped;
 					float musicTime = (float)(delta + 1.0);
@@ -151,12 +162,12 @@ public class MusicBeat : Photon.MonoBehaviour
 	
 	void Update ()
 	{
-		double netCurrentTime = PhotonNetwork.time;
 		if (netStartTime < 0.0f)
 		{
 			if (PhotonNetwork.player.ID == playerWhoIsIt &&
 				PhotonNetwork.playerList.Length > 1)
 			{
+				double netCurrentTime = PhotonNetwork.time;
 				ScenePhotonView.RPC("TaggedPlayer", PhotonTargets.All, playerWhoIsIt, netCurrentTime + 3.0);
 			}
 		}
@@ -165,12 +176,14 @@ public class MusicBeat : Photon.MonoBehaviour
 			bool looped;
 			double dspCurrentBeat;
 			float musicTime = music.time;
+			double dspTime = AudioSettings.dspTime;
 			CalculateLoop(ref musicTime, out looped, out dspCurrentBeat);
 			
 			if (looped)
 				music.time = musicTime;
 
 			currentBeat = dspCurrentBeat;
+			currentBeatReal = CalculateBeat(dspTime, dspStartTimeReal);
 			beatObjects.BroadcastMessage("BeatTime", currentBeat, SendMessageOptions.DontRequireReceiver);
 		}
 	}

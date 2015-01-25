@@ -72,7 +72,7 @@ ParticleRenderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 7c98ffa948c8d43d5ac42a3e9f0ea897, type: 2}
+  - {fileID: 2100000, guid: e7164bf6cc9e6bd4db33553f67475fd4, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
