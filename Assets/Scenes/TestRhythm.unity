@@ -4757,7 +4757,7 @@ MonoBehaviour:
   deathsUI: {fileID: 2008530360}
   timeUI: {fileID: 789448685}
   statsUI: {fileID: 842451697}
-  gameDurationInBeats: 369
+  gameDurationInBeats: 270
   sentRestart: 0
 --- !u!1001 &881516956
 Prefab:
