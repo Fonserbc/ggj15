@@ -28,7 +28,7 @@ class Bullet : Photon.MonoBehaviour
 	void OnTriggerEnter (Collider col) {
 		if (col.gameObject.tag == "Player") {
 			if (photonView.isMine) {
-				if(col.gameObject.GetComponent<PhotonView>().ownerId != photonView.owner.ID) {
+				if(col.gameObject.GetComponentInParent<PhotonView>().ownerId != photonView.owner.ID) {
 					//hit
 					Debug.Log("You hit player " + col.gameObject.GetComponent<PhotonView>().ownerId);
 					GameObject.FindGameObjectWithTag("Logic").GetComponent<GameSession>().Frag(col.gameObject.GetComponent<PhotonView>().ownerId);
