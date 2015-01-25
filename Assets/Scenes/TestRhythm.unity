@@ -9122,7 +9122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54113c1795094774bb2423c49bdd5869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: 2
+  gun: 0
 --- !u!114 &1941986265
 MonoBehaviour:
   m_ObjectHideFlags: 0
