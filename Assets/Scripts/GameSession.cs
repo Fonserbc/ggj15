@@ -8,6 +8,7 @@ public class GameSession : Photon.MonoBehaviour {
 	public Text healthUI;
 	public Text killsUI;
 	public Text deathsUI;
+	public Text timeUI;
 	
 	private static PhotonView ScenePhotonView;
 	
@@ -15,6 +16,7 @@ public class GameSession : Photon.MonoBehaviour {
 		public float health;
 		public int kills;
 		public int deaths;
+		public float lastDead = 0.0f;
 		
 		public PlayerInfo (float h, int k, int d) {
 			health = h;
@@ -99,7 +101,7 @@ public class GameSession : Photon.MonoBehaviour {
 	{
 		if (PhotonNetwork.isMasterClient)
 		{
-			if (localFrags.ContainsKey(fromPlayer) && localFrags.ContainsKey(toPlayer) && localFrags[toPlayer].health <= localHealth)
+			if (localFrags.ContainsKey(fromPlayer) && localFrags.ContainsKey(toPlayer) && localFrags[toPlayer].health <= localHealth && (Time.time - localFrags[toPlayer].lastDead > 0.5f))
 			{
 				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, fromPlayer, 	true, 	0.0f, 			0, 	0);
 				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, toPlayer, 	true, 	-howMuch, 	0, 	0);
@@ -108,6 +110,7 @@ public class GameSession : Photon.MonoBehaviour {
 					ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, 	fromPlayer, true, 	0.0f, 			1,	0);
 					ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, 	toPlayer, 	true, 	maxHealth, 	0,	1);
 					ScenePhotonView.RPC("PlayerDead", PhotonTargets.All, toPlayer);
+					localFrags[toPlayer].lastDead = Time.time;
 				}
 			}
 			else
@@ -128,6 +131,8 @@ public class GameSession : Photon.MonoBehaviour {
 			ScenePhotonView.RPC("CreateExplosion", PhotonTargets.All,PhotonNetwork.player.ID, netInst.PlayerTransform.position); 
 			netInst.Die();
 		}
+		
+		localFrags[deadPlayer].lastDead = Time.time;
 	}
 	
 	[RPC]
@@ -139,7 +144,9 @@ public class GameSession : Photon.MonoBehaviour {
 	
 	public void Hit (int toPlayer, float howMuch)
 	{
-		ScenePhotonView.RPC("NewFrag", PhotonTargets.MasterClient, PhotonNetwork.player.ID, toPlayer, localFrags[toPlayer].health, howMuch);
+		if (Time.time - localFrags[toPlayer].lastDead > 0.5f) {
+			ScenePhotonView.RPC("NewFrag", PhotonTargets.MasterClient, PhotonNetwork.player.ID, toPlayer, localFrags[toPlayer].health, howMuch);
+		}
 	}
 	
 	void OnGUI()
@@ -161,6 +168,10 @@ public class GameSession : Photon.MonoBehaviour {
 		{
 			if (entry.Key == PhotonNetwork.player.ID)
 			{
+				if (timeUI != null) {
+					float timer = (float)60.0-(float)MusicBeat.BeatTime;
+					timeUI.text = "" + Mathf.Floor(timer);
+				}
 				if (healthUI != null)
 					healthUI.text = "" + Mathf.Floor(entry.Value.health*20);
 				
