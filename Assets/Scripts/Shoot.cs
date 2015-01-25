@@ -46,7 +46,7 @@ public class Shoot : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.Alpha4)) gun = Gun.Semi;
 
 		if (gunUI != null) {
-			gunUI.text = gunBullet[(int)gun];
+			gunUI.text = gun.ToString();
 		}
 
 
