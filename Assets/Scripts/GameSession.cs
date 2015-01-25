@@ -121,9 +121,18 @@ public class GameSession : Photon.MonoBehaviour {
 		// Explosion
 		
 		if (deadPlayer == PhotonNetwork.player.ID)
-		{
-			GameObject.Find("Control").GetComponent<PlayerNerworkInstance>().Die();
+		{ 
+			PlayerNerworkInstance netInst = GameObject.Find("Control").GetComponent<PlayerNerworkInstance>();
+			ScenePhotonView.RPC("CreateExplosion", PhotonTargets.All,PhotonNetwork.player.ID, netInst.PlayerTransform.position); 
+			netInst.Die();
 		}
+	}
+	
+	[RPC]
+	public void CreateExplosion(int id, Vector3 position)
+	{
+		Color color = RhythmMovement.PlayerColor(id);
+		((GameObject) GameObject.Instantiate(Resources.Load("DieParticle"), position, Quaternion.identity)).renderer.material.color = color;
 	}
 	
 	public void Hit (int toPlayer)

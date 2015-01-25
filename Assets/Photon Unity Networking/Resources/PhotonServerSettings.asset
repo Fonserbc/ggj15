@@ -38,4 +38,9 @@ MonoBehaviour:
   - PunRespawn
   - RequestForPickupTimes
   - TaggedPlayer
+  - NewFrag
+  - NewPlayerInfo
+  - PlayerDead
+  - PlayerInfoUpdate
+  - CreateExplosion
   DisableAutoOpenWizard: 0
