@@ -33,7 +33,7 @@ public class PlayerNerworkInstance : MonoBehaviour
 			rotation = SpawnPoints[spawnPoint].transform.rotation;
 		}
 
-		if (player != null) {
+		if (player == null) {
 			player = PhotonNetwork.Instantiate("Cube", position, rotation, 0);
 
 			if (beatObjects != null)
