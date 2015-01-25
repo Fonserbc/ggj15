@@ -16,10 +16,10 @@ GameObject:
   - 114: {fileID: 11459164}
   - 114: {fileID: 11452262}
   - 114: {fileID: 11455560}
+  - 114: {fileID: 11497288}
   - 135: {fileID: 13565580}
-  - 114: {fileID: 11494834}
   m_Layer: 0
-  m_Name: Grenade
+  m_Name: Semi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 116486}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.1786032, y: -.449999988, z: -.549118042}
+  m_LocalPosition: {x: 0, y: 2.46799994, z: 0}
   m_LocalScale: {x: .100000001, y: .100000001, z: .100000001}
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,7 +74,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: .0500000007
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3deb119c56f1c6419140bf83e768954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11494834
+--- !u!114 &11497288
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -259,7 +259,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 116486}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e3d6374817c19042a763e1a38a97fd3, type: 3}
+  m_Script: {fileID: 11500000, guid: f5e4360ab35acc646bd4c6a4c442350f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!135 &13565580
@@ -268,7 +268,7 @@ SphereCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 116486}
-  m_Material: {fileID: 13400000, guid: 13ed83ebdc674d34abe91296ff634079, type: 2}
+  m_Material: {fileID: 13400000, guid: 6a2709d51c892d142acb5991ea03ee3d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

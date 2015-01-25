@@ -4,53 +4,96 @@ using System.Collections;
 public class Shoot : MonoBehaviour {
 
 	public enum Gun {
-		Pistol,
-		Semi
+		Pistol = 0,
+		Semi,
+		Grenade,
+		ShotGun
 	};
 	
 	public Gun gun = Gun.Pistol;
 	
-	public GameObject bullet;
-	float lastShoot = 0.0f;
-	private double lastBeat;
+	float lightTimer = 0.0f;
+	private double lastBulletShoot;
+	private double lastBeat = 0.0;
+	private float[] gunBeatRate = new float[] {
+		1f,0.5f, 2f, 4f
+	};
 
+	private string[] gunBullet = new string[] {
+		"Bullet","Semi", "Grenade", "ShotGun"
+	};
+
+	void Start() {
+		lastBulletShoot = MusicBeat.BeatTime;
+	}
+	
+	float fmod(float x, float y) {
+		return x - y * Mathf.Floor(x/y);
+	}
 	
 	// Update is called once per frame
 	void Update () {
-		double beatTime = MusicBeat.BeatTime;
-		float currentBeatFloor = Mathf.Floor((float) beatTime);
 
-		if (lastShoot > 0.0f) {
-			lastShoot -= Time.deltaTime;
+		if(Input.GetKeyDown(KeyCode.Alpha1)) gun = Gun.Pistol;
+		if(Input.GetKeyDown(KeyCode.Alpha2)) gun = Gun.Semi;
+		if(Input.GetKeyDown(KeyCode.Alpha3)) gun = Gun.Grenade;
+		if(Input.GetKeyDown(KeyCode.Alpha4)) gun = Gun.ShotGun;
+
+
+		double beatTime = MusicBeat.BeatTime;
+
+		if (lightTimer > 0.0f) {
+			lightTimer -= Time.deltaTime;
 			
-			if (lastShoot <= 0.0f) {
-				lastShoot = 0.0f;
+			if (lightTimer <= 0.0f) {
+				lightTimer = 0.0f;
 				light.enabled = false;
 			}
 		}
+		
+		if (Input.GetButton ("Fire1") && beatTime - lastBulletShoot >= gunBeatRate[(int)gun]) {
+			float rate = Mathf.Min (gunBeatRate[(int)gun],1.0f);
+			float current = Mathf.Floor((float) beatTime/rate);
+			float currentLast = Mathf.Floor((float) lastBeat/rate);
 
-		if (Mathf.Floor((float)lastBeat) != currentBeatFloor)
-		{
-			switch (gun) {
-			case Gun.Pistol:
-				if (Input.GetButton("Fire1")) {
-					ShootBullet();
-				}
-				break;
-			default:
-				break;
-			}
+			if (currentLast != current)
+				ShootBullet();
 		}
 
 		lastBeat = beatTime;
-
 	}
 	
 	public void ShootBullet()
 	{
-		GameObject b = PhotonNetwork.Instantiate("Bullet", transform.position, transform.rotation, 0);
-		
-		lastShoot = 0.2f;
+		GameObject b = PhotonNetwork.Instantiate(gunBullet[(int)gun], transform.position, transform.rotation, 0);
+		lastBulletShoot = (float)MusicBeat.BeatTime - fmod ((float)MusicBeat.BeatTime, Mathf.Min (gunBeatRate[(int)gun],1.0f));
+		lightTimer = 0.2f;
 		light.enabled = true;
+	}
+
+	public void ShootExplosion(Vector3 position) {
+		GameObject b = PhotonNetwork.Instantiate("Explosion", position, transform.rotation, 0);
+	}
+
+	public void ShootShotGun(Vector3 pos) {
+		/*
+		float[] bulletOffset = new float[] {
+			0f,0.2f, -0.2f, 0.4f, -0.4f
+		};
+		*/
+		Vector3 p0 = transform.up*.5f;
+		Vector3 p1 = transform.right*.3f + transform.up*.3f;
+		Vector3 p2 = transform.right*-.3f + transform.up*.3f;
+		Vector3 p3 = transform.right * .4f;		
+		Vector3 p4 = transform.right * -.4f;
+
+		Vector3[] bulletOffset = new Vector3[] {
+			p0, p1, p2, p3, p4
+		};
+		for(int i = 0; i < 5; ++i) {
+			//GameObject b = PhotonNetwork.Instantiate("ShotGunBullet", 0.5f*transform.forward+position+transform.right*bulletOffset[i], transform.rotation, 0);
+			GameObject b = PhotonNetwork.Instantiate("ShotGunBullet", transform.position + bulletOffset[i], transform.rotation, 0);
+
+		}
 	}
 }
