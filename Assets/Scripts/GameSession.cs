@@ -70,12 +70,14 @@ public class GameSession : Photon.MonoBehaviour {
 	{
 		gameFinished = false;
 		GameObject.Find("Control").GetComponent<PlayerNerworkInstance>().CreatePlayerObject();
+		Camera.main.GetComponent<ShowWithTab>().forceShow = false;
 	}
 	
 	[RPC]
 	public void FinishGame() {
-		Debug.Log ("Game finished "+gameFinished);
 		gameFinished = true;
+		Debug.Log ("Game finished "+gameFinished);
+		Camera.main.GetComponent<ShowWithTab>().forceShow = true;
 	}
 	
 	//Only should be called called when being master client
@@ -240,7 +242,7 @@ public class GameSession : Photon.MonoBehaviour {
 			}
 		}
 
-		if (statsUI != null || gameFinished)
+		if (statsUI != null)
 		{
 			statsUI.text = s;
 		}
