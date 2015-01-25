@@ -4,19 +4,14 @@ using System.Collections;
 
 public class CountDownText : MonoBehaviour
 {
-	public Text child;
-
-	RectTransform rect;
+	public GameObject HUD;
 	Text text;
-	float quake = 5.0f;
+	RectTransform rect;
 
 	void SetText(string str)
 	{
 		if (text != null)
 			text.text = str;
-
-		if (child != null)
-			child.text = str;
 	}
 
 	void Start ()
@@ -27,18 +22,19 @@ public class CountDownText : MonoBehaviour
 	
 	void Update ()
 	{
+		bool visibleHUD = false;
 		if (PhotonNetwork.connectionStateDetailed == PeerState.Joined)
 		{
-			if (PhotonNetwork.playerList.Length < 2)
+			if (MusicBeat.BeatTime < 1.0f)
 			{
-				SetText("Waiting for players\n" + GetConnectingDots());
-			}
-			else
-			{
-				if (MusicBeat.BeatTime < 1.0f)
+				if (PhotonNetwork.playerList.Length < 2)
 				{
-					quake = 5.0f * Mathf.Max(0.0f, 5.0f - (1.0f - (float)MusicBeat.BeatTime));
-
+					SetText("Waiting for players\n" + GetConnectingDots());
+				}
+				else
+				{
+					visibleHUD = true;
+					float quake = 5.0f * Mathf.Max(0.0f, 5.0f - (1.0f - (float)MusicBeat.BeatTime));
 					if (MusicBeat.BeatTime < -3.0f)
 					{
 						SetText("");
@@ -58,15 +54,27 @@ public class CountDownText : MonoBehaviour
 
 					rect.anchoredPosition = anchoredPosition;
 				}
-				else
-				{
-					SetText("");
-				}
+			}
+			else
+			{
+				SetText("");
 			}
 		}
 		else
 		{
 			SetText("Connecting" + GetConnectingDots() + "\nStatus: " + PhotonNetwork.connectionStateDetailed);
+		}
+
+		if (HUD != null)
+		{
+			if (HUD.activeSelf && !visibleHUD)
+			{
+				HUD.SetActive(false);
+			}
+			else if (!HUD.activeSelf && visibleHUD)
+			{
+				HUD.SetActive(true);
+			}
 		}
 	}
 

@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
 public class GameSession : Photon.MonoBehaviour {
 
-	
+	public Text healthUI;
+	public Text killsUI;
+	public Text deathsUI;
+
 	private static PhotonView ScenePhotonView;
 	
 	public class PlayerInfo {
@@ -140,12 +144,34 @@ public class GameSession : Photon.MonoBehaviour {
 		ScenePhotonView.RPC("NewFrag", PhotonTargets.MasterClient, PhotonNetwork.player.ID, toPlayer, howMuch);
 	}
 	
-	void OnGUI() {
+	void OnGUI()
+	{
 		string s = "";
-		foreach (KeyValuePair<int, PlayerInfo> entry in localFrags) {
+		foreach (KeyValuePair<int, PlayerInfo> entry in localFrags)
+		{
 			s += "\n" + (entry.Key == PhotonNetwork.player.ID? ">" : " ") + entry.Key + ": " + entry.Value.kills + " / " + entry.Value.deaths;
 		}
 		
 		GUI.Label(new Rect(10, 10,200,200), s);
+	}
+
+	void Update()
+	{
+		foreach (KeyValuePair<int, PlayerInfo> entry in localFrags)
+		{
+			if (entry.Key == PhotonNetwork.player.ID)
+			{
+				if (healthUI != null)
+					healthUI.text = "" + Mathf.Floor(entry.Value.health*20);
+
+				if (killsUI != null)
+					killsUI.text = "" + entry.Value.kills;
+
+				if (deathsUI != null)
+					deathsUI.text = "" + entry.Value.deaths;
+
+				break;
+			}
+		}
 	}
 }
