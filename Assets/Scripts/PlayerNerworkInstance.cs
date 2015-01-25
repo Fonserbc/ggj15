@@ -23,7 +23,7 @@ public class PlayerNerworkInstance : MonoBehaviour
 		CreatePlayerObject();
 	}
 
-	void CreatePlayerObject()
+	public void CreatePlayerObject()
 	{
 		Vector3 position = Vector3.zero;
 		Quaternion rotation = Quaternion.identity;
@@ -33,13 +33,15 @@ public class PlayerNerworkInstance : MonoBehaviour
 			rotation = SpawnPoints[spawnPoint].transform.rotation;
 		}
 
-		player = PhotonNetwork.Instantiate("Cube", position, rotation, 0);
+		if (player != null) {
+			player = PhotonNetwork.Instantiate("Cube", position, rotation, 0);
 
-		if (beatObjects != null)
-			player.transform.SetParent(beatObjects.transform, false);
-
-		if (Camera != null)
-			Camera.transform.SetParent(player.transform, false);
+			if (beatObjects != null)
+				player.transform.SetParent(beatObjects.transform, false);
+	
+			if (Camera != null)
+				Camera.transform.SetParent(player.transform, false);
+		}
 	}
 	
 	public void Die() {

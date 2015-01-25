@@ -23,6 +23,18 @@ public class GameSession : Photon.MonoBehaviour {
 			kills = k;
 			deaths = d;
 		}
+		
+		public void Copy(PlayerInfo other) {
+			health = other.health;
+			kills = other.kills;
+			deaths = other.deaths;
+		}
+		
+		public void Set (float h, int k, int d) {
+			health = h;
+			kills = k;
+			deaths = d;
+		}
 	};
 	
 	private float maxHealth = 5f;
@@ -32,6 +44,26 @@ public class GameSession : Photon.MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		ScenePhotonView = this.GetComponent<PhotonView>();
+	}
+	
+	public void RestartSession () 
+	{
+		if (PhotonNetwork.isMasterClient)
+		{
+			foreach (KeyValuePair<int, PlayerInfo> entry in localFrags)
+			{
+				entry.Value.Set(maxHealth,0,0);
+				ScenePhotonView.RPC("NewPlayerInfo", PhotonTargets.All, entry.Key, maxHealth, 0, 0);
+			}
+			
+			ScenePhotonView.RPC("Restart", PhotonTargets.All);
+		}
+	}
+	
+	[RPC]
+	public void Restart ()
+	{
+		GameObject.Find("Control").GetComponent<PlayerNerworkInstance>().CreatePlayerObject();
 	}
 	
 	//Only should be called called when being master client
@@ -69,6 +101,10 @@ public class GameSession : Photon.MonoBehaviour {
 		{
 			Debug.Log("New player info registered");
 			localFrags.Add (playerID, new PlayerInfo(health, kills, deaths));
+		}
+		else
+		{
+			localFrags[playerID].Set(health, kills, deaths);
 		}
 	}
 	
