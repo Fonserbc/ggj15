@@ -69,16 +69,12 @@ public class GameSession : Photon.MonoBehaviour {
 	[RPC]
 	public void Restart ()
 	{
-		gameFinished = false;
 		GameObject.Find("Control").GetComponent<PlayerNerworkInstance>().CreatePlayerObject();
-		Camera.main.GetComponent<ShowWithTab>().forceShow = false;
 	}
 	
 	[RPC]
 	public void FinishGame() {
 		gameFinished = true;
-		Debug.Log ("Game finished "+gameFinished);
-		Camera.main.GetComponent<ShowWithTab>().forceShow = true;
 	}
 	
 	//Only should be called called when being master client
@@ -226,18 +222,24 @@ public class GameSession : Photon.MonoBehaviour {
 				if (timeUI != null)
 				{
 					float timer = (float)gameDurationInBeats-Mathf.Floor ((float)MusicBeat.BeatTimeFromBegin);
-					if (timer >= 0)
-					{
-						timeUI.text = "" + (timer <= gameDurationInBeats ? timer.ToString("#") : "");
-						sentRestart = false;
-					}
-					else
-						timeUI.text = "";
 					
 					if (!gameFinished && PhotonNetwork.isMasterClient && timer <= 0.0f && !sentRestart) {
 						Debug.Log("--------------Finishing");
 						ScenePhotonView.RPC("FinishGame", PhotonTargets.All);
 						sentRestart = true;
+					}
+					
+					if (timer >= 0)
+					{
+						timeUI.text = "" + (timer <= gameDurationInBeats ? timer.ToString("#") : "");
+						sentRestart = false;
+						gameFinished = false;
+						Camera.main.GetComponent<ShowWithTab>().forceShow = false;
+					}
+					else
+					{
+						timeUI.text = "";
+						Camera.main.GetComponent<ShowWithTab>().forceShow = true;
 					}
 				}
 				if (healthUI != null)
