@@ -25,13 +25,15 @@ class Bullet : Photon.MonoBehaviour
 		}
 	}
 	
-	void OnCollisionEnter (Collision col) {
+	void OnTriggerEnter (Collider col) {
 		if (col.gameObject.tag == "Player") {
 			if (photonView.isMine) {
 				if(col.gameObject.GetComponent<PhotonView>().ownerId != photonView.owner.ID) {
 					//hit
 					Debug.Log("You hit player " + col.gameObject.GetComponent<PhotonView>().ownerId);
 					GameObject.FindGameObjectWithTag("Logic").GetComponent<GameSession>().Frag(col.gameObject.GetComponent<PhotonView>().ownerId);
+					
+					PhotonNetwork.Destroy(gameObject);
 				}
 			}
 		}
