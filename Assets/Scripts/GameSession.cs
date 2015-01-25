@@ -30,7 +30,13 @@ public class GameSession : Photon.MonoBehaviour {
 	public void NewPlayerConnected (int playerID)
 	{
 		Debug.Log("New player connected to host "+playerID);
-		if (PhotonNetwork.isMasterClient) {
+		if (PhotonNetwork.isMasterClient)
+		{
+			if (localFrags.ContainsKey(PhotonNetwork.player.ID)) // Lel
+			{
+				ScenePhotonView.RPC("NewPlayerInfo", PhotonTargets.All, PhotonNetwork.player.ID, 0, 0);
+			}
+		
 			foreach (KeyValuePair<int, PlayerInfo> entry in localFrags) {
 				ScenePhotonView.RPC("NewPlayerInfo", PhotonTargets.Others, entry.Key, entry.Value.kills, entry.Value.deaths);
 			}
