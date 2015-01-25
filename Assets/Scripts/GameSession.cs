@@ -28,6 +28,13 @@ public class GameSession : Photon.MonoBehaviour {
 			kills = k;
 			deaths = d;
 		}
+		
+		public PlayerInfo (PlayerInfo pi) {
+			health = pi.health;
+			kills = pi.kills;
+			deaths = pi.deaths;
+			state = pi.state;
+		}
 	};
 	
 	[System.Serializable]
@@ -90,7 +97,7 @@ public class GameSession : Photon.MonoBehaviour {
 		if (!localFrags.ContainsKey(playerID))
 		{
 			Debug.Log("New player info registered");
-			localFrags.Add (playerID, newPlayer);
+			localFrags.Add (playerID, new PlayerInfo(newPlayer));
 		}
 	}
 	
