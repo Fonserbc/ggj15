@@ -37,9 +37,9 @@ public class Shoot : MonoBehaviour {
 	void Update () {
 
 		if(Input.GetKeyDown(KeyCode.Alpha1)) gun = Gun.Pistol;
-		if(Input.GetKeyDown(KeyCode.Alpha2)) gun = Gun.Semi;
-		if(Input.GetKeyDown(KeyCode.Alpha3)) gun = Gun.Grenade;
-		if(Input.GetKeyDown(KeyCode.Alpha4)) gun = Gun.ShotGun;
+		if(Input.GetKeyDown(KeyCode.Alpha2)) gun = Gun.Grenade;
+		if(Input.GetKeyDown(KeyCode.Alpha3)) gun = Gun.ShotGun;
+		if(Input.GetKeyDown(KeyCode.Alpha4)) gun = Gun.Semi;
 
 
 		double beatTime = MusicBeat.BeatTime;
