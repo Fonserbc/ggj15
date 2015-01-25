@@ -9,6 +9,7 @@ public class GameSession : Photon.MonoBehaviour {
 	public Text killsUI;
 	public Text deathsUI;
 	public Text timeUI;
+	public Text statsUI;
 	
 	private static PhotonView ScenePhotonView;
 	
@@ -155,7 +156,7 @@ public class GameSession : Photon.MonoBehaviour {
 		string s = "";
 		foreach (KeyValuePair<int, PlayerInfo> entry in localFrags)
 		{
-			s += "\n" + (entry.Key == PhotonNetwork.player.ID? ">" : " ") + entry.Key + ": " + entry.Value.kills + " / " + entry.Value.deaths;
+			
 		}
 		
 		GUI.Label(new Rect(10, 10,200,200), s);
@@ -164,8 +165,10 @@ public class GameSession : Photon.MonoBehaviour {
 	
 	void Update()
 	{
+		string s = "";
 		foreach (KeyValuePair<int, PlayerInfo> entry in localFrags)
 		{
+			s += "\n" + (entry.Key == PhotonNetwork.player.ID? ">" : " ") + entry.Key + ": " + entry.Value.kills + " / " + entry.Value.deaths;
 			if (entry.Key == PhotonNetwork.player.ID)
 			{
 				if (timeUI != null) {
@@ -183,6 +186,11 @@ public class GameSession : Photon.MonoBehaviour {
 				
 				break;
 			}
+		}
+
+		if (statsUI != null)
+		{
+			statsUI.text = s;
 		}
 	}
 }
