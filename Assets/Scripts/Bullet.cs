@@ -32,10 +32,9 @@ class Bullet : Photon.MonoBehaviour
 				if(otherView.ownerId != photonView.owner.ID) {
 					//hit
 					Debug.Log("You hit player " + otherView.ownerId);
-					GameObject.FindGameObjectWithTag("Logic").GetComponent<GameSession>().Frag(otherView.ownerId);
-					
-					PhotonNetwork.Destroy(gameObject);
+					GameObject.FindGameObjectWithTag("Logic").GetComponent<GameSession>().Hit(otherView.ownerId);
 				}
+				PhotonNetwork.Destroy(gameObject);
 			}
 		}
 	}
