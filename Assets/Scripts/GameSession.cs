@@ -29,6 +29,7 @@ public class GameSession : Photon.MonoBehaviour {
 	//Only should be called called when being master client
 	public void NewPlayerConnected (int playerID)
 	{
+		Debug.Log("New player connected to host "+playerID);
 		if (PhotonNetwork.isMasterClient) {
 			foreach (KeyValuePair<int, PlayerInfo> entry in localFrags) {
 				ScenePhotonView.RPC("NewPlayerInfo", PhotonTargets.Others, entry.Key, entry.Value.kills, entry.Value.deaths);
@@ -41,6 +42,7 @@ public class GameSession : Photon.MonoBehaviour {
 	//Only should be called called when being master client
 	public void PlayerDisconnected (int playerID)
 	{
+		Debug.Log("New player disconnected to host "+playerID);
 		if (PhotonNetwork.isMasterClient) {			
 			ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, playerID, false, 0, 0);
 		}
@@ -51,6 +53,7 @@ public class GameSession : Photon.MonoBehaviour {
 	{
 		if (!localFrags.ContainsKey(playerID))
 		{
+			Debug.Log("New player info registered");
 			localFrags.Add (playerID, new PlayerInfo(kills, deaths));
 		}
 	}
@@ -60,10 +63,12 @@ public class GameSession : Photon.MonoBehaviour {
 	{
 		if (!connected) // Disconnect
 		{
+			Debug.Log("Player Disconnected "+playerID);
 			localFrags.Remove(playerID);
 		}
 		else
 		{
+			Debug.Log("Player Update "+playerID);
 			if (localFrags.ContainsKey(playerID))
 			{
 				localFrags[playerID].kills += newKills;
