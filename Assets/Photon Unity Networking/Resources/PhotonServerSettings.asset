@@ -43,4 +43,6 @@ MonoBehaviour:
   - PlayerDead
   - PlayerInfoUpdate
   - CreateExplosion
+  - FinishGame
+  - Restart
   DisableAutoOpenWizard: 0
