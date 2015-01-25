@@ -43,8 +43,6 @@ public class PlayerNerworkInstance : MonoBehaviour
 	}
 	
 	public void Die() {
-		
-		PhotonNetwork.Instantiate("DieParticle", player.transform.position, player.transform.rotation, 0);
 			
 		Vector3 position = Vector3.zero;
 		Quaternion rotation = Quaternion.identity;
