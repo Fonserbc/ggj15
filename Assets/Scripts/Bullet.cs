@@ -28,8 +28,10 @@ class Bullet : Photon.MonoBehaviour
 	void OnCollisionEnter (Collision col) {
 		if (col.gameObject.tag == "Player") {
 			if (photonView.isMine) {
-				//col.gameObject.GetComponent<PhotonView>().ownerId
-				//Debug.Log("You hit player ", col.gameObject.GetComponent<PhotonView>().ownerId);
+				if(col.gameObject.GetComponent<PhotonView>().ownerId != photonView.owner.ID) {
+					//hit
+					Debug.Log("You hit player " + col.gameObject.GetComponent<PhotonView>().ownerId);
+				}
 			}
 		}
 	}
