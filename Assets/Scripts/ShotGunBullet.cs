@@ -8,16 +8,18 @@ class ShotGunBullet : Photon.MonoBehaviour
 	bool started = false;
 	float lifeTime = 3.0f;
 	private double lastBeat;
+	private Vector3 offset;
 
 	void Start()
 	{
 		BulletColor bcollor = GetComponent<BulletColor>();
 		bcollor.SetColor(RhythmMovement.PlayerColor(photonView.owner.ID));
-		//if (photonView.isMine) transform.SetParent (Camera.main.transform, true);
-		//else enabled = false;
+
 
 		initialBeatTime = MusicBeat.BeatTime;
 		lastBeat = MusicBeat.BeatTime;
+		offset = transform.position - Camera.main.transform.position;
+		offset = Camera.main.transform.InverseTransformDirection (offset);
 
 	}
 
@@ -26,10 +28,11 @@ class ShotGunBullet : Photon.MonoBehaviour
 		double beatTime = MusicBeat.BeatTime;
 		if (photonView.isMine) {
 			if(!started) {
+				transform.rotation = Camera.main.transform.rotation;
+				transform.position = Camera.main.transform.position + Camera.main.transform.TransformDirection(offset);
 				if (lastBeat > beatTime)
 					initialBeatTime -= lastBeat - beatTime + 1.0;
 				if((beatTime-initialBeatTime) >= 2) {
-					transform.SetParent (null, true);
 					rigidbody.velocity = transform.forward * bulletSpeed;
 					started = true;
 				}
