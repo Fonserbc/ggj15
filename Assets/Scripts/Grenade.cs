@@ -39,7 +39,7 @@ class Grenade : Photon.MonoBehaviour
 				if(otherView.ownerId != photonView.owner.ID) {
 					//hit
 					Debug.Log("You hit player " + otherView.ownerId);
-					GameObject.FindGameObjectWithTag("Logic").GetComponent<GameSession>().Hit(otherView.ownerId,0.5f);
+					GameObject.FindGameObjectWithTag("Logic").GetComponent<GameSession>().Hit(otherView.ownerId,0.3f);
 				}
 			}
 		}
