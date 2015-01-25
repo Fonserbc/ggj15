@@ -54,6 +54,12 @@ public class RhythmMovement : Photon.MonoBehaviour
 			GetComponent<CharacterController>().enabled = false;
 	}
 	
+	public void Die () {
+		startPosition = transform.position;
+		endPosition = transform.position;
+		movementDirection = Vector3.zero;
+	}
+	
 	void Update ()
 	{
 		double beatTime = MusicBeat.BeatTime;
