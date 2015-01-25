@@ -93,7 +93,7 @@ public class Shoot : MonoBehaviour {
 		Vector3[] bulletOffset = new Vector3[] {
 			p0, p1, p2, p3, p4
 		};
-		for(int i = 0; i < 1; ++i) {
+		for(int i = 0; i < 5; ++i) {
 			//GameObject b = PhotonNetwork.Instantiate("ShotGunBullet", 0.5f*transform.forward+position+transform.right*bulletOffset[i], transform.rotation, 0);
 			GameObject b = PhotonNetwork.Instantiate("ShotGunBullet", transform.position + bulletOffset[i], transform.rotation, 0);
 
