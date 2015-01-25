@@ -222,7 +222,7 @@ public class GameSession : Photon.MonoBehaviour {
 					float timer = (float)gameDurationInBeats-Mathf.Floor ((float)MusicBeat.BeatTimeFromBegin);
 					timeUI.text = "" + (timer <= gameDurationInBeats ? timer.ToString("#") : "");
 					
-					if (PhotonNetwork.isMasterClient && timer <= 0.0f) {
+					if (!gameFinished && PhotonNetwork.isMasterClient && timer <= 0.0f) {
 						ScenePhotonView.RPC("FinishGame", PhotonTargets.All);
 					}
 				}
@@ -234,8 +234,6 @@ public class GameSession : Photon.MonoBehaviour {
 				
 				if (deathsUI != null)
 					deathsUI.text = "" + entry.Value.deaths;
-				
-				break;
 			}
 		}
 
