@@ -25,13 +25,11 @@ public class GameSession : Photon.MonoBehaviour {
 	
 	private float maxHealth = 5f;
 	
-	private Dictionary<int, PlayerInfo> localFrags;
+	private Dictionary<int, PlayerInfo> localFrags = new Dictionary<int,PlayerInfo>();
 
 	// Use this for initialization
 	void Awake () {
 		ScenePhotonView = this.GetComponent<PhotonView>();
-		
-		localFrags = new Dictionary<int, PlayerInfo>();
 	}
 	
 	//Only should be called called when being master client
@@ -58,7 +56,7 @@ public class GameSession : Photon.MonoBehaviour {
 	{
 		Debug.Log("New player disconnected to host "+playerID);
 		if (PhotonNetwork.isMasterClient) {			
-			ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, playerID, false, 0, 0, 0);
+			ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, playerID, false, 0.0f, 0, 0);
 		}
 	}
 	
@@ -73,7 +71,7 @@ public class GameSession : Photon.MonoBehaviour {
 	}
 	
 	[RPC]
-	void PlayerInfoUpdate (int playerID, bool connected, float newHealth, int newKills, int newDeaths)
+	void PlayerInfoUpdate(int playerID, bool connected, float newHealth, int newKills, int newDeaths)
 	{
 		if (!connected) // Disconnect
 		{
@@ -103,11 +101,11 @@ public class GameSession : Photon.MonoBehaviour {
 		{
 			if (localFrags.ContainsKey(fromPlayer) && localFrags.ContainsKey(toPlayer))
 			{
-				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, fromPlayer, 	true, 	0, 			0, 	0);
+				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, fromPlayer, 	true, 	0.0f, 			0, 	0);
 				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, toPlayer, 	true, 	-howMuch, 	0, 	0);
 				
 				if (localFrags[toPlayer].health <= 0) {
-					ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, 	fromPlayer, true, 	0, 			1,	0);
+					ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, 	fromPlayer, true, 	0.0f, 			1,	0);
 					ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, 	toPlayer, 	true, 	maxHealth, 	0,	1);
 					ScenePhotonView.RPC("PlayerDead", PhotonTargets.All, toPlayer);
 				}
