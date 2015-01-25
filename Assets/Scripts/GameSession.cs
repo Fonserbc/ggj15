@@ -14,6 +14,8 @@ public class GameSession : Photon.MonoBehaviour {
 	
 	private static PhotonView ScenePhotonView;
 	
+	private bool gameFinished = false;
+	
 	public class PlayerInfo {
 		public float health;
 		public int kills;
@@ -65,7 +67,13 @@ public class GameSession : Photon.MonoBehaviour {
 	[RPC]
 	public void Restart ()
 	{
+		gameFinished = false;
 		GameObject.Find("Control").GetComponent<PlayerNerworkInstance>().CreatePlayerObject();
+	}
+	
+	[RPC]
+	public void FinishGame() {
+		gameFinished = true;
 	}
 	
 	//Only should be called called when being master client
@@ -182,6 +190,8 @@ public class GameSession : Photon.MonoBehaviour {
 	
 	public void Hit (int toPlayer, float howMuch)
 	{
+		if (gameFinished) return;
+		
 		if (Time.time - localFrags[toPlayer].lastDead > 0.5f) {
 			ScenePhotonView.RPC("NewFrag", PhotonTargets.MasterClient, PhotonNetwork.player.ID, toPlayer, localFrags[toPlayer].health, howMuch);
 		}
@@ -211,6 +221,10 @@ public class GameSession : Photon.MonoBehaviour {
 				if (timeUI != null) {
 					float timer = (float)gameDurationInBeats-Mathf.Floor ((float)MusicBeat.BeatTimeFromBegin);
 					timeUI.text = "" + (timer <= gameDurationInBeats ? timer.ToString("#") : "");
+					
+					if (timer <= 0.0f) {
+						ScenePhotonView.RPC("FinishGame", PhotonTargets.All);
+					}
 				}
 				if (healthUI != null)
 					healthUI.text = "" + Mathf.Floor(entry.Value.health*20);
@@ -225,9 +239,13 @@ public class GameSession : Photon.MonoBehaviour {
 			}
 		}
 
-		if (statsUI != null)
+		if (statsUI != null || gameFinished)
 		{
 			statsUI.text = s;
+		}
+		
+		if (gameFinished && PhotonNetwork.isMasterClient && Input.GetButtonDown("Fire1")) {
+			ScenePhotonView.RPC("RestartGame", PhotonTargets.All);
 		}
 	}
 }
