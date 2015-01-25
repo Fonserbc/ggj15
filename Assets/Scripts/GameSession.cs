@@ -8,6 +8,7 @@ public class GameSession : Photon.MonoBehaviour {
 	public Text healthUI;
 	public Text killsUI;
 	public Text deathsUI;
+	public Text timeUI;
 	
 	private static PhotonView ScenePhotonView;
 	
@@ -166,6 +167,10 @@ public class GameSession : Photon.MonoBehaviour {
 		{
 			if (entry.Key == PhotonNetwork.player.ID)
 			{
+				if (timeUI != null) {
+					float timer = (float)60.0-(float)MusicBeat.BeatTime;
+					timeUI.text = "" + Mathf.Floor(timer);
+				}
 				if (healthUI != null)
 					healthUI.text = "" + Mathf.Floor(entry.Value.health*20);
 				
