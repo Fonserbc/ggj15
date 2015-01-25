@@ -48,5 +48,7 @@ public class PlayerNerworkInstance : MonoBehaviour
 		
 		player.transform.position = position;
 		player.transform.rotation = rotation;
+		
+		player.GetComponent<RhythmMovement>().Die();
 	}
 }

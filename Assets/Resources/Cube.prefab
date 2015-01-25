@@ -617,7 +617,7 @@ ParticleAnimator:
   force: {x: 0, y: 0, z: 0}
   damping: .00999999978
   stopSimulation: 0
-  autodestruct: 0
+  autodestruct: 1
 --- !u!23 &2348524
 Renderer:
   m_ObjectHideFlags: 1
