@@ -9,7 +9,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 416486}
   - 33: {fileID: 3316486}
-  - 65: {fileID: 6516486}
   - 23: {fileID: 2316486}
   - 108: {fileID: 10816486}
   - 96: {fileID: 9616486}
@@ -18,6 +17,7 @@ GameObject:
   - 114: {fileID: 11452262}
   - 114: {fileID: 11455560}
   - 114: {fileID: 11497288}
+  - 135: {fileID: 13565580}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 116486}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2.46799994, z: 0}
   m_LocalScale: {x: .100000001, y: .100000001, z: .100000001}
   m_Children: []
   m_Father: {fileID: 0}
@@ -79,18 +79,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &6516486
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 116486}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!96 &9616486
 TrailRenderer:
   m_ObjectHideFlags: 1
@@ -143,7 +131,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Intensity: 2
-  m_Range: 10
+  m_Range: 15
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -274,6 +262,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e4360ab35acc646bd4c6a4c442350f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &13565580
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116486}
+  m_Material: {fileID: 13400000, guid: 6a2709d51c892d142acb5991ea03ee3d, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .500000119
+  m_Center: {x: 5.96046448e-08, y: 0, z: -8.94069672e-08}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

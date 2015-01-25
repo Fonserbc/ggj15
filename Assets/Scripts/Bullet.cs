@@ -3,14 +3,14 @@ using UnityEngine;
 
 class Bullet : Photon.MonoBehaviour
 {
-	public float bulletSpeed = 30.0f;
-	public float lifeTime = 3.0f;
+	float bulletSpeed = 25.0f;
+	float lifeTime = 3.0f;
 
 	void Start()
 	{
 		BulletColor bcollor = GetComponent<BulletColor>();
 		bcollor.SetColor(RhythmMovement.PlayerColor(photonView.owner.ID));
-		rigidbody.velocity = transform.forward * 20.0f;
+		rigidbody.velocity = transform.forward * bulletSpeed;
 	}
 
 	void Update()
@@ -22,6 +22,14 @@ class Bullet : Photon.MonoBehaviour
 				PhotonNetwork.Destroy(gameObject);
 			else
 				enabled = false;
+		}
+	}
+	
+	void OnCollisionEnter (Collision col) {
+		if (col.gameObject.tag == "Player") {
+			if (photonView.isMine) {
+				//col.gameObject.GetComponent<PhotonView>().ownerId
+			}
 		}
 	}
 }
