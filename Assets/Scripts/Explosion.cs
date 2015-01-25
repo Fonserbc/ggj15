@@ -41,7 +41,7 @@ class Explosion : Photon.MonoBehaviour
 				if(otherView.ownerId != photonView.owner.ID) {
 					//hit
 					Debug.Log("You hit player " + otherView.ownerId);
-					GameObject.FindGameObjectWithTag("Logic").GetComponent<GameSession>().Hit(otherView.ownerId);
+					GameObject.FindGameObjectWithTag("Logic").GetComponent<GameSession>().Hit(otherView.ownerId,2f);
 				}
 			}
 		}

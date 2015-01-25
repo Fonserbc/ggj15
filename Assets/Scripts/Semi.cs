@@ -1,10 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
-class Bullet : Photon.MonoBehaviour
+class Semi : Photon.MonoBehaviour
 {
 	float bulletSpeed = 25.0f;
-	float lifeTime = 3.0f;
+	float lifeTime = 2f;
 
 	void Start()
 	{
@@ -32,7 +32,7 @@ class Bullet : Photon.MonoBehaviour
 				if(otherView.ownerId != photonView.owner.ID) {
 					//hit
 					Debug.Log("You hit player " + otherView.ownerId);
-					GameObject.FindGameObjectWithTag("Logic").GetComponent<GameSession>().Hit(otherView.ownerId,1f);
+					GameObject.FindGameObjectWithTag("Logic").GetComponent<GameSession>().Hit(otherView.ownerId, 0.25f);
 				}
 				PhotonNetwork.Destroy(gameObject);
 			}
