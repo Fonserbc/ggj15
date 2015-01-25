@@ -8,18 +8,18 @@ public class GameSession : Photon.MonoBehaviour {
 	private static PhotonView ScenePhotonView;
 	
 	public class PlayerInfo {
-		public int health;
+		public float health;
 		public int kills;
 		public int deaths;
 		
-		public PlayerInfo (int h, int k, int d) {
+		public PlayerInfo (float h, int k, int d) {
 			health = h;
 			kills = k;
 			deaths = d;
 		}
 	};
 	
-	private int maxHealth = 5;
+	private float maxHealth = 5f;
 	
 	private Dictionary<int, PlayerInfo> localFrags;
 
@@ -59,7 +59,7 @@ public class GameSession : Photon.MonoBehaviour {
 	}
 	
 	[RPC]
-	void NewPlayerInfo (int playerID, int health, int kills, int deaths)
+	void NewPlayerInfo (int playerID, float health, int kills, int deaths)
 	{
 		if (!localFrags.ContainsKey(playerID))
 		{
@@ -69,7 +69,7 @@ public class GameSession : Photon.MonoBehaviour {
 	}
 	
 	[RPC]
-	void PlayerInfoUpdate (int playerID, bool connected, int newHealth, int newKills, int newDeaths)
+	void PlayerInfoUpdate (int playerID, bool connected, float newHealth, int newKills, int newDeaths)
 	{
 		if (!connected) // Disconnect
 		{
@@ -93,14 +93,14 @@ public class GameSession : Photon.MonoBehaviour {
 	}
 	
 	[RPC]
-	void NewFrag (int fromPlayer, int toPlayer)
+	void NewFrag (int fromPlayer, int toPlayer, float howMuch)
 	{
 		if (PhotonNetwork.isMasterClient)
 		{
 			if (localFrags.ContainsKey(fromPlayer) && localFrags.ContainsKey(toPlayer))
 			{
 				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, fromPlayer, true, 0, 0, 0);
-				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, toPlayer, true, -1, 0, 0);
+				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, toPlayer, true, -howMuch, 0, 0);
 				
 				if (localFrags[toPlayer].health <= 0) {
 					ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, fromPlayer, true, 0, 1, 0);
@@ -135,9 +135,9 @@ public class GameSession : Photon.MonoBehaviour {
 		((GameObject) GameObject.Instantiate(Resources.Load("DieParticle"), position, Quaternion.identity)).renderer.material.color = color;
 	}
 	
-	public void Hit (int toPlayer)
+	public void Hit (int toPlayer, float howMuch)
 	{
-		ScenePhotonView.RPC("NewFrag", PhotonTargets.MasterClient, PhotonNetwork.player.ID, toPlayer);
+		ScenePhotonView.RPC("NewFrag", PhotonTargets.MasterClient, PhotonNetwork.player.ID, toPlayer, howMuch);
 	}
 	
 	void OnGUI() {
