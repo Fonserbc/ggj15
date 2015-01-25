@@ -43,7 +43,6 @@ class Explosion : Photon.MonoBehaviour
 					Debug.Log("You hit player " + otherView.ownerId);
 					GameObject.FindGameObjectWithTag("Logic").GetComponent<GameSession>().Hit(otherView.ownerId);
 				}
-				PhotonNetwork.Destroy(gameObject);
 			}
 		}
 	}
