@@ -35,7 +35,7 @@ public class PlayerNerworkInstance : MonoBehaviour
 	}
 	
 	public void Die() {
-		GameObject particles = (GameObject)GameObject.Instantiate(GetComponentInChildren<ParticleRenderer>().gameObject, player.transform.position, player.transform.rotation);
+		GameObject particles = (GameObject)GameObject.Instantiate(player.GetComponentInChildren<ParticleRenderer>().gameObject, player.transform.position, player.transform.rotation);
 		particles.particleEmitter.Emit();
 	
 		Vector3 position = Vector3.zero;
