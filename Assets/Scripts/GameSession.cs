@@ -11,6 +11,7 @@ public class GameSession : Photon.MonoBehaviour {
 	public Text timeUI;
 	public Text statsUI;
 	public int gameDurationInBeats = 270;
+	public bool sentRestart = false;
 	
 	private static PhotonView ScenePhotonView;
 	
@@ -222,13 +223,21 @@ public class GameSession : Photon.MonoBehaviour {
 			s += "\n" + (entry.Key == PhotonNetwork.player.ID? ">" : " ") + entry.Key + ": " + entry.Value.kills + " / " + entry.Value.deaths;
 			if (entry.Key == PhotonNetwork.player.ID)
 			{
-				if (timeUI != null) {
+				if (timeUI != null)
+				{
 					float timer = (float)gameDurationInBeats-Mathf.Floor ((float)MusicBeat.BeatTimeFromBegin);
-					timeUI.text = "" + (timer <= gameDurationInBeats ? timer.ToString("#") : "");
+					if (timer >= 0)
+					{
+						timeUI.text = "" + (timer <= gameDurationInBeats ? timer.ToString("#") : "");
+						sentRestart = false;
+					}
+					else
+						timeUI.text = "";
 					
-					if (!gameFinished && PhotonNetwork.isMasterClient && timer <= 0.0f) {
+					if (!gameFinished && PhotonNetwork.isMasterClient && timer <= 0.0f && !sentRestart) {
 						Debug.Log("--------------Finishing");
 						ScenePhotonView.RPC("FinishGame", PhotonTargets.All);
+						sentRestart = true;
 					}
 				}
 				if (healthUI != null)
@@ -247,8 +256,10 @@ public class GameSession : Photon.MonoBehaviour {
 			statsUI.text = s;
 		}
 		
-		if (gameFinished && PhotonNetwork.isMasterClient && Input.GetButtonDown("Fire1")) {
+		if (gameFinished && PhotonNetwork.isMasterClient && Input.GetButtonDown("Fire1"))
+		{
 			RestartSession();
+			MusicBeat.ForceStart();
 		}
 	}
 }

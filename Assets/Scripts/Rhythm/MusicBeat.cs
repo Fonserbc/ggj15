@@ -20,6 +20,15 @@ public class MusicBeat : Photon.MonoBehaviour
 	private static double dspStartTime = -1.0;
 	private static double dspStartTimeReal = -1.0;
 	private static int playerWhoIsIt = -1;
+	
+	public static void ForceStart()
+	{
+		if (PhotonNetwork.player.ID == playerWhoIsIt)
+		{
+			netStartTime = -1.0f;
+			ScenePhotonView.RPC("TaggedPlayer", PhotonTargets.All, playerWhoIsIt, netStartTime);
+		}
+	}
 
 	public static double BeatTime
 	{
@@ -36,8 +45,8 @@ public class MusicBeat : Photon.MonoBehaviour
 			return currentBeatReal;
 		}
 	}
-
-	public static double PlayerWhoIsIt
+	
+	public static int PlayerWhoIsIt
 	{
 		get
 		{
