@@ -15,6 +15,7 @@ public class GameSession : Photon.MonoBehaviour {
 		public float health;
 		public int kills;
 		public int deaths;
+		public float lastDead = 0.0f;
 		
 		public PlayerInfo (float h, int k, int d) {
 			health = h;
@@ -128,6 +129,8 @@ public class GameSession : Photon.MonoBehaviour {
 			ScenePhotonView.RPC("CreateExplosion", PhotonTargets.All,PhotonNetwork.player.ID, netInst.PlayerTransform.position); 
 			netInst.Die();
 		}
+		
+		localFrags[deadPlayer].lastDead = Time.time;
 	}
 	
 	[RPC]
@@ -139,7 +142,9 @@ public class GameSession : Photon.MonoBehaviour {
 	
 	public void Hit (int toPlayer, float howMuch)
 	{
-		ScenePhotonView.RPC("NewFrag", PhotonTargets.MasterClient, PhotonNetwork.player.ID, toPlayer, localFrags[toPlayer].health, howMuch);
+		if (Time.time - localFrags[toPlayer].lastDead > 0.5f) {
+			ScenePhotonView.RPC("NewFrag", PhotonTargets.MasterClient, PhotonNetwork.player.ID, toPlayer, localFrags[toPlayer].health, howMuch);
+		}
 	}
 	
 	void OnGUI()
