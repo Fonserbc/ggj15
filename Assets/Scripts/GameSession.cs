@@ -4,60 +4,30 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GameSession : Photon.MonoBehaviour {
-
+	
 	public Text healthUI;
 	public Text killsUI;
 	public Text deathsUI;
-
+	
 	private static PhotonView ScenePhotonView;
 	
-	public enum PlayerState {
-		Default,
-		Invincible
-	};
-	
-	[System.Serializable]
 	public class PlayerInfo {
 		public float health;
 		public int kills;
 		public int deaths;
-		public PlayerState state = PlayerState.Default;
+		public bool diedNow = false;
 		
 		public PlayerInfo (float h, int k, int d) {
 			health = h;
 			kills = k;
 			deaths = d;
 		}
-		
-		public PlayerInfo (PlayerInfo pi) {
-			health = pi.health;
-			kills = pi.kills;
-			deaths = pi.deaths;
-			state = pi.state;
-		}
 	};
-	
-	[System.Serializable]
-	public class PlayerUpdateMessage {
-		public bool connected;
-		public float newHealth;
-		public int newKills;
-		public int newDeaths;
-		public PlayerState newState;
-		
-		public PlayerUpdateMessage(bool c, float h, int k, int d, PlayerState s) {
-			connected = c;
-			newHealth = h;
-			newKills = k;
-			newDeaths = d;
-			newState = s;			
-		}
-	}
 	
 	private float maxHealth = 5f;
 	
 	private Dictionary<int, PlayerInfo> localFrags = new Dictionary<int,PlayerInfo>();
-
+	
 	// Use this for initialization
 	void Awake () {
 		ScenePhotonView = this.GetComponent<PhotonView>();
@@ -71,14 +41,14 @@ public class GameSession : Photon.MonoBehaviour {
 		{
 			if (!localFrags.ContainsKey(PhotonNetwork.player.ID)) // Lel
 			{
-				ScenePhotonView.RPC("NewPlayerInfo", PhotonTargets.All, PhotonNetwork.player.ID, new PlayerInfo(maxHealth, 0, 0));
+				ScenePhotonView.RPC("NewPlayerInfo", PhotonTargets.All, PhotonNetwork.player.ID, maxHealth, 0, 0);
 			}
-		
+			
 			foreach (KeyValuePair<int, PlayerInfo> entry in localFrags) {
-				ScenePhotonView.RPC("NewPlayerInfo", PhotonTargets.Others, entry.Key, entry.Value);
+				ScenePhotonView.RPC("NewPlayerInfo", PhotonTargets.Others, entry.Key, entry.Value.health, entry.Value.kills, entry.Value.deaths);
 			}
-		
-			ScenePhotonView.RPC("NewPlayerInfo", PhotonTargets.All, playerID, new PlayerInfo(maxHealth, 0, 0));
+			
+			ScenePhotonView.RPC("NewPlayerInfo", PhotonTargets.All, playerID, maxHealth, 0, 0);
 		}
 	}
 	
@@ -92,12 +62,12 @@ public class GameSession : Photon.MonoBehaviour {
 	}
 	
 	[RPC]
-	void NewPlayerInfo (int playerID, PlayerInfo newPlayer)
+	void NewPlayerInfo (int playerID, float health, int kills, int deaths)
 	{
 		if (!localFrags.ContainsKey(playerID))
 		{
 			Debug.Log("New player info registered");
-			localFrags.Add (playerID, new PlayerInfo(newPlayer));
+			localFrags.Add (playerID, new PlayerInfo(health, kills, deaths));
 		}
 	}
 	
@@ -130,7 +100,7 @@ public class GameSession : Photon.MonoBehaviour {
 	{
 		if (PhotonNetwork.isMasterClient)
 		{
-			if (localFrags.ContainsKey(fromPlayer) && localFrags.ContainsKey(toPlayer))
+			if (localFrags.ContainsKey(fromPlayer) && localFrags.ContainsKey(toPlayer) && !localFrags[toPlayer].diedNow)
 			{
 				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, fromPlayer, 	true, 	0.0f, 			0, 	0);
 				ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, toPlayer, 	true, 	-howMuch, 	0, 	0);
@@ -139,6 +109,7 @@ public class GameSession : Photon.MonoBehaviour {
 					ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, 	fromPlayer, true, 	0.0f, 			1,	0);
 					ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, 	toPlayer, 	true, 	maxHealth, 	0,	1);
 					ScenePhotonView.RPC("PlayerDead", PhotonTargets.All, toPlayer);
+					localFrags[toPlayer].diedNow = true;
 				}
 			}
 			else
@@ -185,7 +156,7 @@ public class GameSession : Photon.MonoBehaviour {
 		GUI.Label(new Rect(10, 10,200,200), s);
 		 */
 	}
-
+	
 	void Update()
 	{
 		foreach (KeyValuePair<int, PlayerInfo> entry in localFrags)
@@ -194,15 +165,17 @@ public class GameSession : Photon.MonoBehaviour {
 			{
 				if (healthUI != null)
 					healthUI.text = "" + Mathf.Floor(entry.Value.health*20);
-
+				
 				if (killsUI != null)
 					killsUI.text = "" + entry.Value.kills;
-
+				
 				if (deathsUI != null)
 					deathsUI.text = "" + entry.Value.deaths;
-
+				
 				break;
 			}
+			
+			entry.Value.diedNow = false;
 		}
 	}
 }
