@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Shoot : MonoBehaviour {
 
-	public enum Gun {
+	public Text gunUI;
+	public enum Gun
+	{
 		Pistol = 0,
 		Semi,
 		Grenade,
@@ -34,12 +37,17 @@ public class Shoot : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 
 		if(Input.GetKeyDown(KeyCode.Alpha1)) gun = Gun.Pistol;
 		if(Input.GetKeyDown(KeyCode.Alpha2)) gun = Gun.Grenade;
 		if(Input.GetKeyDown(KeyCode.Alpha3)) gun = Gun.ShotGun;
 		if(Input.GetKeyDown(KeyCode.Alpha4)) gun = Gun.Semi;
+
+		if (gunUI != null) {
+			gunUI.text = gunBullet[(int)gun];
+		}
 
 
 		double beatTime = MusicBeat.BeatTime;
