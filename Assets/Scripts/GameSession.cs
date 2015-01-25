@@ -74,6 +74,7 @@ public class GameSession : Photon.MonoBehaviour {
 	
 	[RPC]
 	public void FinishGame() {
+		Debug.Log ("Game finished "+gameFinished);
 		gameFinished = true;
 	}
 	
