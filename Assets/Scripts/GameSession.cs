@@ -109,6 +109,7 @@ public class GameSession : Photon.MonoBehaviour {
 					ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, 	fromPlayer, true, 	0.0f, 			1,	0);
 					ScenePhotonView.RPC("PlayerInfoUpdate", PhotonTargets.All, 	toPlayer, 	true, 	maxHealth, 	0,	1);
 					ScenePhotonView.RPC("PlayerDead", PhotonTargets.All, toPlayer);
+					localFrags[toPlayer].lastDead = Time.time;
 				}
 			}
 			else
