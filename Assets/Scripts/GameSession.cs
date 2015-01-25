@@ -101,7 +101,8 @@ public class GameSession : Photon.MonoBehaviour {
 	void OnGUI() {
 		int i = 0;
 		foreach (KeyValuePair<int, PlayerInfo> entry in localFrags) {
-			GUI.Label(new Rect(0,0 + 100*i,200,100), entry.Key + ": " + entry.Value.kills + " / " + entry.Value.deaths);
+			GUI.Label(new Rect(10 + (entry.Key == PhotonNetwork.player.ID? 10 : 0),0 + 100*i,200,100), entry.Key + ": " + entry.Value.kills + " / " + entry.Value.deaths);
+			++i;
 		}
 	}
 }
