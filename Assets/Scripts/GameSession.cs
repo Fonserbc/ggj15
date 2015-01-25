@@ -11,10 +11,17 @@ public class GameSession : Photon.MonoBehaviour {
 
 	private static PhotonView ScenePhotonView;
 	
+	public enum PlayerState {
+		Default,
+		Invincible
+	};
+	
+	[System.Serializable]
 	public class PlayerInfo {
 		public float health;
 		public int kills;
 		public int deaths;
+		public PlayerState state = PlayerState.Default;
 		
 		public PlayerInfo (float h, int k, int d) {
 			health = h;
@@ -22,6 +29,23 @@ public class GameSession : Photon.MonoBehaviour {
 			deaths = d;
 		}
 	};
+	
+	[System.Serializable]
+	public class PlayerUpdateMessage {
+		public bool connected;
+		public float newHealth;
+		public int newKills;
+		public int newDeaths;
+		public PlayerState newState;
+		
+		public PlayerUpdateMessage(bool c, float h, int k, int d, PlayerState s) {
+			connected = c;
+			newHealth = h;
+			newKills = k;
+			newDeaths = d;
+			newState = s;			
+		}
+	}
 	
 	private float maxHealth = 5f;
 	
@@ -42,14 +66,14 @@ public class GameSession : Photon.MonoBehaviour {
 		{
 			if (!localFrags.ContainsKey(PhotonNetwork.player.ID)) // Lel
 			{
-				ScenePhotonView.RPC("NewPlayerInfo", PhotonTargets.All, PhotonNetwork.player.ID, maxHealth, 0, 0);
+				ScenePhotonView.RPC("NewPlayerInfo", PhotonTargets.All, PhotonNetwork.player.ID, new PlayerInfo(maxHealth, 0, 0));
 			}
 		
 			foreach (KeyValuePair<int, PlayerInfo> entry in localFrags) {
-				ScenePhotonView.RPC("NewPlayerInfo", PhotonTargets.Others, entry.Key, entry.Value.health, entry.Value.kills, entry.Value.deaths);
+				ScenePhotonView.RPC("NewPlayerInfo", PhotonTargets.Others, entry.Key, entry.Value);
 			}
 		
-			ScenePhotonView.RPC("NewPlayerInfo", PhotonTargets.All, playerID, maxHealth, 0, 0);
+			ScenePhotonView.RPC("NewPlayerInfo", PhotonTargets.All, playerID, new PlayerInfo(maxHealth, 0, 0));
 		}
 	}
 	
@@ -63,12 +87,12 @@ public class GameSession : Photon.MonoBehaviour {
 	}
 	
 	[RPC]
-	void NewPlayerInfo (int playerID, float health, int kills, int deaths)
+	void NewPlayerInfo (int playerID, PlayerInfo newPlayer)
 	{
 		if (!localFrags.ContainsKey(playerID))
 		{
 			Debug.Log("New player info registered");
-			localFrags.Add (playerID, new PlayerInfo(health, kills, deaths));
+			localFrags.Add (playerID, newPlayer);
 		}
 	}
 	
