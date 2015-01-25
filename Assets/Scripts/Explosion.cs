@@ -4,6 +4,8 @@ using UnityEngine;
 class Explosion : Photon.MonoBehaviour
 {
 	float bulletSpeed = 25.0f;
+	private double lastBeat;
+
 	double initialBeatTime;
 	void Start()
 	{
@@ -13,6 +15,7 @@ class Explosion : Photon.MonoBehaviour
 		renderer.material.color = c;
 		light.color = c;
 		initialBeatTime = MusicBeat.BeatTime;
+		lastBeat = MusicBeat.BeatTime;
 
 	}
 
@@ -20,12 +23,15 @@ class Explosion : Photon.MonoBehaviour
 	{
 		double beatTime = MusicBeat.BeatTime;
 		if (photonView.isMine) {
+			if (lastBeat > beatTime)
+				initialBeatTime -= lastBeat - beatTime + 1.0;
 			if((beatTime-initialBeatTime) >= 1) {
 				PhotonNetwork.Destroy(gameObject);
 			}
 		} else {
 			enabled = false;
 		}
+		lastBeat = beatTime;
 	}
 	
 	void OnCollisionEnter (Collision col) {

@@ -14,7 +14,7 @@ public class Shoot : MonoBehaviour {
 	
 	float lightTimer = 0.0f;
 	private double lastBulletShoot;
-	private double lastBeat = 0.0;
+	private double lastBeat;
 	private float[] gunBeatRate = new float[] {
 		1f,0.5f, 2f, 4f
 	};
@@ -25,6 +25,8 @@ public class Shoot : MonoBehaviour {
 
 	void Start() {
 		lastBulletShoot = MusicBeat.BeatTime;
+		lastBeat = MusicBeat.BeatTime;
+
 	}
 	
 	float fmod(float x, float y) {
@@ -50,7 +52,8 @@ public class Shoot : MonoBehaviour {
 				light.enabled = false;
 			}
 		}
-		
+		if (lastBeat > beatTime)
+						lastBulletShoot -= lastBeat - beatTime + 1.0;
 		if (Input.GetButton ("Fire1") && beatTime - lastBulletShoot >= gunBeatRate[(int)gun]) {
 			float rate = Mathf.Min (gunBeatRate[(int)gun],1.0f);
 			float current = Mathf.Floor((float) beatTime/rate);
@@ -81,11 +84,11 @@ public class Shoot : MonoBehaviour {
 			0f,0.2f, -0.2f, 0.4f, -0.4f
 		};
 		*/
-		Vector3 p0 = transform.up*.5f;
-		Vector3 p1 = transform.right*.3f + transform.up*.3f;
-		Vector3 p2 = transform.right*-.3f + transform.up*.3f;
-		Vector3 p3 = transform.right * .4f;		
-		Vector3 p4 = transform.right * -.4f;
+		Vector3 p0 = transform.up*.5f + transform.forward*.3f;
+		Vector3 p1 = transform.right*.3f + transform.up*.3f + transform.forward*.3f;
+		Vector3 p2 = transform.right*-.3f + transform.up*.3f + transform.forward*.3f;
+		Vector3 p3 = transform.right * .4f + transform.forward*.3f;		
+		Vector3 p4 = transform.right * -.4f + transform.forward*.3f;
 
 		Vector3[] bulletOffset = new Vector3[] {
 			p0, p1, p2, p3, p4
