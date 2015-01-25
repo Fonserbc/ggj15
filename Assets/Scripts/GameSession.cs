@@ -222,7 +222,7 @@ public class GameSession : Photon.MonoBehaviour {
 					float timer = (float)gameDurationInBeats-Mathf.Floor ((float)MusicBeat.BeatTimeFromBegin);
 					timeUI.text = "" + (timer <= gameDurationInBeats ? timer.ToString("#") : "");
 					
-					if (timer <= 0.0f) {
+					if (PhotonNetwork.isMasterClient && timer <= 0.0f) {
 						ScenePhotonView.RPC("FinishGame", PhotonTargets.All);
 					}
 				}
