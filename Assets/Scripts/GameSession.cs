@@ -243,7 +243,7 @@ public class GameSession : Photon.MonoBehaviour {
 		}
 		
 		if (gameFinished && PhotonNetwork.isMasterClient && Input.GetButtonDown("Fire1")) {
-			ScenePhotonView.RPC("RestartGame", PhotonTargets.All);
+			RestartSession();
 		}
 	}
 }
