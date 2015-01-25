@@ -63,6 +63,8 @@ public class MusicBeat : Photon.MonoBehaviour
 			{
 				TagPlayer(PhotonNetwork.player.ID, netStartTime);
 			}
+			
+			session.PlayerDisconnected(player.ID);
 		}
 	}
 
