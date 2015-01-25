@@ -84,11 +84,11 @@ public class Shoot : MonoBehaviour {
 			0f,0.2f, -0.2f, 0.4f, -0.4f
 		};
 		*/
-		Vector3 p0 = transform.up*.5f + transform.forward*.3f;
-		Vector3 p1 = transform.right*.3f + transform.up*.3f + transform.forward*.3f;
-		Vector3 p2 = transform.right*-.3f + transform.up*.3f + transform.forward*.3f;
-		Vector3 p3 = transform.right * .4f + transform.forward*.3f;		
-		Vector3 p4 = transform.right * -.4f + transform.forward*.3f;
+		Vector3 p0 = transform.up*.3f + transform.forward*.3f;
+		Vector3 p1 = transform.right*.3f + transform.up*.1f + transform.forward*.3f;
+		Vector3 p2 = transform.right*-.3f + transform.up*.1f + transform.forward*.3f;
+		Vector3 p3 = transform.right * .4f + transform.up*-.2f + transform.forward*.3f;		
+		Vector3 p4 = transform.right * -.4f + transform.up*-.2f + transform.forward*.3f;
 
 		Vector3[] bulletOffset = new Vector3[] {
 			p0, p1, p2, p3, p4
