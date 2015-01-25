@@ -45,6 +45,13 @@ public class MusicBeat : Photon.MonoBehaviour
 		session = this.GetComponent<GameSession>();
 	}
 
+	void OnJoinRoom()
+	{
+		if (PhotonNetwork.isMasterClient) {
+			session.NewPlayerConnected(PhotonNetwork.player.ID);	
+		}
+	}
+
 	void OnPhotonPlayerConnected(PhotonPlayer player)
 	{
 		if (PhotonNetwork.isMasterClient)
