@@ -82,13 +82,13 @@ public class GameSession : Photon.MonoBehaviour {
 		gameFinished = true;
 
 		winner = -1;
-		int bestKDRatio = -3000000;
-		int KDRatio;
+		int bestKills = -3000000;
+		int bestDeaths = 300000;
 		foreach (KeyValuePair<int, PlayerInfo> entry in localFrags)
 		{
-			KDRatio = entry.Value.kills - entry.Value.deaths;
-			if (KDRatio > bestKDRatio) {
-				bestKDRatio = KDRatio;
+			if (bestKills < entry.Value.kills || (bestKills == entry.Value.kills && bestDeaths > entry.Value.deaths)) {
+				bestKills = entry.Value.kills;
+				bestDeaths = entry.Value.deaths;
 				winner = entry.Key;
 			}
 		}
