@@ -12,6 +12,11 @@ public class GameSession : Photon.MonoBehaviour {
 	public Text statsUI;
 	public int gameDurationInBeats = 270;
 	public bool sentRestart = false;
+
+	private const float RESTART_TIME = 10.0f;
+	private float restartTimer = -1.0f;
+
+	private int winner = -1;
 	
 	private static PhotonView ScenePhotonView;
 	
@@ -75,6 +80,22 @@ public class GameSession : Photon.MonoBehaviour {
 	[RPC]
 	public void FinishGame() {
 		gameFinished = true;
+
+		winner = -1;
+		int bestKDRatio = -3000000;
+		int KDRatio;
+		foreach (KeyValuePair<int, PlayerInfo> entry in localFrags)
+		{
+			KDRatio = entry.Value.kills - entry.Value.deaths;
+			if (KDRatio > bestKDRatio) {
+				bestKDRatio = KDRatio;
+				winner = entry.Key;
+			}
+		}
+
+		
+		if (restartTimer < 0.0f)
+			restartTimer = RESTART_TIME;
 	}
 	
 	//Only should be called called when being master client
@@ -214,6 +235,10 @@ public class GameSession : Photon.MonoBehaviour {
 	void Update()
 	{
 		string s = "";
+
+		if (gameFinished) {
+			s += "Player " + winner + " wins!\nRestarting game in "+Mathf.CeilToInt(restartTimer)+"\n";
+		}
 		foreach (KeyValuePair<int, PlayerInfo> entry in localFrags)
 		{
 			s += "\n" + (entry.Key == PhotonNetwork.player.ID? ">" : " ") + entry.Key + ": " + entry.Value.kills + " / " + entry.Value.deaths;
@@ -234,11 +259,11 @@ public class GameSession : Photon.MonoBehaviour {
 						timeUI.text = "" + (timer <= gameDurationInBeats ? timer.ToString("#") : "");
 						sentRestart = false;
 						gameFinished = false;
+						if (restartTimer == 0.0f) restartTimer = -1.0f;
 						Camera.main.GetComponent<ShowWithTab>().forceShow = false;
 					}
 					else
 					{
-						timeUI.text = "";
 						Camera.main.GetComponent<ShowWithTab>().forceShow = true;
 					}
 				}
@@ -257,11 +282,24 @@ public class GameSession : Photon.MonoBehaviour {
 		{
 			statsUI.text = s;
 		}
-		
-		if (gameFinished && PhotonNetwork.isMasterClient && Input.GetButtonDown("Fire1"))
+
+		if (gameFinished && restartTimer > 0.0f) {
+			restartTimer -= Time.deltaTime;
+			
+			if (restartTimer <= 0.0f) {
+				restartTimer = 0.0f;
+				
+				if (PhotonNetwork.isMasterClient) {
+					RestartSession();
+					MusicBeat.ForceStart();
+				}
+			}
+		}
+
+		/*if (gameFinished && PhotonNetwork.isMasterClient && Input.GetButtonDown("Fire1"))
 		{
 			RestartSession();
 			MusicBeat.ForceStart();
-		}
+		}*/
 	}
 }
