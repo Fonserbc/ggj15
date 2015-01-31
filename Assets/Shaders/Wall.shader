@@ -17,6 +17,7 @@
 		#include "UnityCG.cginc"
 		#include "Assets/Shaders/CustomLight.cginc"
 		#pragma surface surf CustomLight vertex:vert
+		#pragma target 3.0
 
 		uniform sampler2D _MainTex;
 		uniform float4 _BaseColor;

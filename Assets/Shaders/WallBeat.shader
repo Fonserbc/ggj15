@@ -18,6 +18,7 @@
 		#include "UnityCG.cginc"
 		#include "Assets/Shaders/CustomLight2.cginc"
 		#pragma surface surf CustomLight2 vertex:vert
+		#pragma target 3.0
 
 		uniform sampler2D _MainTex;
 		uniform float4 _BaseColor;
@@ -52,18 +53,12 @@
 			}
 			else {
 				o.Gloss = 0;
-				float modded = torramod(_BeatTime,1.0f);
-				float percent; //percent between beat and no beat
-				//float s = sin(modded*3.1415+0.5);
-				//percent = 1-abs(s);
-				//if(modded < 0.5) percent = percent*percent*percent*percent;
-				//else percent = sqrt(percent);
-				modded += sin((_BeatTime+0.5)*10.0)*0.1 + sin((_BeatTime+1.0)*20.0)*0.1;
-				percent = 1-modded;
+				float modded = torramod(_BeatTime,1.0) + (sin((_BeatTime+0.5)*10.0) + sin((_BeatTime+1.0)*20.0))*0.1; //last two factors are just a bit of noise
+				float percent = 1-modded; //percent between beat and no beat;
 				float distFromFive = abs(0.5-uv.x);
-				distFromFive = distFromFive-torramod(distFromFive,0.05f);
-				percent *= 1-(distFromFive/0.5);
-				if(uv.y <= percent && (torramod(uv.x-0.0025, .05) < .04)) {
+				distFromFive = distFromFive-torramod(distFromFive,0.05);
+				percent *= 1.0-(distFromFive/0.5);
+				if(uv.y <= percent && (torramod(uv.x-0.0025, 0.05) < 0.04)) {
 					o.Gloss = 0.5f;
 					o.Albedo = _OutlineColor.rgb;
 					o.Specular = uv.y/percent;
