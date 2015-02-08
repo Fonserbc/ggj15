@@ -18,6 +18,7 @@
 		#include "UnityCG.cginc"
 		#include "Assets/Shaders/CustomLight.cginc"
 		#pragma surface surf CustomLight
+		#pragma target 3.0
 
 		uniform sampler2D _MainTex;
 		uniform float4 _BaseColor;
@@ -45,19 +46,12 @@
 		};
 		
 		void surf (Input IN, inout SurfaceOutput o) {
-			float startFog = _FogStart;
-			float fogWidth = _FogWidth;
-			float fogFactor = min(1.0, max(0.0, IN.screenPos.z - startFog)/fogWidth);
+			float fogFactor = min(1.0, max(0.0, IN.screenPos.z - _FogStart)/_FogWidth);
 			float4 tex = tex2D (_MainTex, IN.uv_MainTex);
 			float3 baseColor = tex.rgb * _BaseColor.rgb;
 			float h = hex(abs(IN.worldPos.xz/2.0));
-			if ( h < _OutlineWidth ) {
-				o.Albedo = _OutlineColor.rgb;
-				o.Albedo = lerp(o.Albedo, baseColor, fogFactor);
-				o.Gloss = 1.0 - fogFactor;
-			}
-			else if ( h < _OutlineWidth*3.0 ) {
-				o.Albedo = lerp(_OutlineColor.rgb, baseColor, (h -_OutlineWidth)/(_OutlineWidth*2.0));
+			if ( h < _OutlineWidth*3.0 ) {
+				o.Albedo = ( h < _OutlineWidth )? _OutlineColor.rgb : lerp(_OutlineColor.rgb, baseColor, (h -_OutlineWidth)/(_OutlineWidth*2.0));
 				o.Albedo = lerp(o.Albedo, baseColor, fogFactor);
 				o.Gloss = 1.0 - fogFactor;
 			}

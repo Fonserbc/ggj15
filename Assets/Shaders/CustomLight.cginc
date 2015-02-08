@@ -32,10 +32,6 @@ float3 HSLtoRGB(in float3 HSL) {
     return (RGB - 0.5) * C + HSL.z;
 }
 
-float torramod(float x, float y) {
-	return x - y * floor(x/y);
-}
-
 float3 computeBorder(float3 albedo, float3 light) {
 	float3 surfHSL = RGBtoHSL(albedo);
 	float3 lightHSL = RGBtoHSL(light);
@@ -62,7 +58,7 @@ float3 computeCenter(float3 albedo, float3 light) {
 }
 
 float4 LightingCustomLight_PrePass (SurfaceOutput s, float4 light) {
-	return float4(s.Gloss > 0.5? computeBorder(s.Albedo, light.rgb) : computeCenter(s.Albedo, light.rgb),1);
+	return float4(lerp(computeCenter(s.Albedo, light.rgb), computeBorder(s.Albedo, light.rgb), s.Gloss),1);
 }
 
 #endif
