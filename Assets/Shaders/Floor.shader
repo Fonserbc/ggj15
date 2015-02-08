@@ -13,8 +13,6 @@
 		LOD 200
 		
 		CGPROGRAM
-		// Upgrade NOTE: excluded shader from OpenGL ES 2.0 because it uses non-square matrices
-		#pragma exclude_renderers gles
 		#include "UnityCG.cginc"
 		#include "Assets/Shaders/CustomLight.cginc"
 		#pragma surface surf CustomLight
