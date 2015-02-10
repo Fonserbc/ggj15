@@ -4,6 +4,21 @@ using System.Collections;
 public class MusicBeat : Photon.MonoBehaviour
 {
 	public static double beatsPerMinute = 90.0;
+
+	[SerializeField]
+	private double _beatsPerMinute = beatsPerMinute;
+	public double BeatsPerMinute
+	{
+		get
+		{
+			return _beatsPerMinute;
+		}
+		set
+		{
+			beatsPerMinute = _beatsPerMinute = value;
+		}
+	}
+
 	public static double compassNumerator = 4.0;
 	public static double compassDenominator = 4.0;
 
@@ -158,7 +173,7 @@ public class MusicBeat : Photon.MonoBehaviour
 			if (dspBeat > lastBeat)
 			{
 				double beatsToGoBack = lastBeat - loopBeat;
-				double timeToGoBack = (60.0 * beatsToGoBack) / 90.0;
+				double timeToGoBack = (60.0 * beatsToGoBack) / beatsPerMinute;
 				musicTime -= (float)timeToGoBack;
 				dspStartTime += timeToGoBack;
 				looped = true;

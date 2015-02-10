@@ -3429,7 +3429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AutoConnect: 0
-  Version: 1
+  Version: 0
   MaxPlayers: 8
 --- !u!4 &703087770
 Transform:
@@ -4637,7 +4637,7 @@ AudioSource:
   m_GameObject: {fileID: 875790059}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: e96eea8b58b36a948b15c10297b65585, type: 3}
+  m_audioClip: {fileID: 8300000, guid: b349c700bdbfd124e8126b9da615f675, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -4699,6 +4699,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e28fdca0f03f944fac625f576a8ffb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _beatsPerMinute: 142
   music: {fileID: 875790060}
   beatObjects: {fileID: 1671094859}
   beatObjectsSched: {fileID: 707213387}
