@@ -75,6 +75,7 @@ public class MusicBeat : Photon.MonoBehaviour
 
 	void Start()
 	{
+		beatsPerMinute = _beatsPerMinute;
 		ScenePhotonView = this.GetComponent<PhotonView>();
 		session = this.GetComponent<GameSession>();
 	}
